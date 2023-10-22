@@ -13,6 +13,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import { useState } from 'react';
 import MovieIcon from '@mui/icons-material/Movie';
 import SettingsIcon from '@mui/icons-material/Settings';
+import RecyclingIcon from '@mui/icons-material/Recycling';
 
 function Header() {
   
@@ -40,7 +41,7 @@ function Header() {
     }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-        <MovieIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+        <RecyclingIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -56,7 +57,7 @@ function Header() {
               textDecoration: 'none',
             }}
           >
-            Películas
+            EcoRecicla
           </Typography>
          
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -89,10 +90,10 @@ function Header() {
               }}
             >
                 <MenuItem component='a' href='/movie/'>
-                  <Typography textAlign="center">Peliculas</Typography>
+                  <Typography textAlign="center"></Typography>
                 </MenuItem>
                 <MenuItem component='a' href='/movie-table/'>
-                  <Typography textAlign="center">Mantenimiento Peliculas</Typography>
+                  <Typography textAlign="center"></Typography>
                 </MenuItem>
             </Menu>
           </Box>
@@ -114,7 +115,7 @@ function Header() {
               textDecoration: 'none',
             }}
           >
-            Películas
+            EcoRecicla
           </Typography>
           
           
@@ -144,10 +145,10 @@ function Header() {
               onClose={handleCloseNavMenu}
             >
               <MenuItem component='a' href='/movie/'>
-                  <Typography textAlign="center">Peliculas</Typography>
+                  <Typography textAlign="center">Mantenimiento Usuarios</Typography>
                 </MenuItem>
                 <MenuItem component='a' href='/movie-table/'>
-                  <Typography textAlign="center">Mantenimiento Peliculas</Typography>
+                  <Typography textAlign="center">Mantenimiento Materiales</Typography>
                 </MenuItem>
             
             </Menu>

@@ -10,10 +10,10 @@ export function Home () {
         color='text.primary'
         gutterBottom
       >
-        App Movies
+        EcoRecicla
       </Typography>
       <Typography variant='h5' align='center' color='text.secondary' paragraph>
-        Consulta toda la información sobre películas de cine en nuestra base de datos.
+        Consulta toda la información que necesites en nuestra base de datos.
       </Typography>
     </Container>
   )
