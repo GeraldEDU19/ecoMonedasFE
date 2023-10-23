@@ -6,6 +6,7 @@ import { PageNotFound } from './components/Home/PageNotFound'
 import { ListMovies } from './components/Movie/ListMovies'
 import TableMovies from './components/Movie/TableMovies'
 import { DetailMovie } from './components/Movie/DetailMovie'
+import { Login } from '@mui/icons-material'
 
 const router= createBrowserRouter([
   {
@@ -28,6 +29,11 @@ const router= createBrowserRouter([
   {
     path: '/movie/:id',
     element: <DetailMovie />
+  },
+  
+  {
+    path: '/user/login/',
+    element : <Login />
   }
 ])
 

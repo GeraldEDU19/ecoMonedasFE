@@ -17,7 +17,7 @@ export function Footer () {
         <Grid container direction='column' alignItems='center'>
           <Grid item xs={12}>
             <Typography color='white' variant='subtitle1'>
-              Anderson Delgado <br />
+              Anderson Delgado 
               Gerald Chaves
             </Typography>
           </Grid>

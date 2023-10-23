@@ -28,7 +28,7 @@ export function CreateMovie() {
   const movieSchema = yup.object({
     title: yup.string()
        .required('El titulo es requerido')
-       .min (2, 'El titulo debe tener 2 caracteres')
+       .min (2, 'El titulo debe tener 2 caracteres'),
        time:yup
        .string ()
        .required('La duracion es requerida'),
