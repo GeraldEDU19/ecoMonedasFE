@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import MovieService from "../../services/MovieService";
+// import MovieService from "../../services/MovieService";
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -10,8 +10,11 @@ import IconButton from '@mui/material/IconButton';
 import AccessTime from '@mui/icons-material/AccessTime'
 import Language from '@mui/icons-material/Language'
 import { Link } from "react-router-dom";
-import { Info } from '@mui/icons-material'
-import papel from '../../assets/papel.png'
+import { AttachMoney, ColorLens, Info } from '@mui/icons-material'
+import papel from '../../../assets/papel.png'
+import plastico from '../../../assets/plastico.jpeg'
+import vidrio from '../../../assets/vidrio.jpg'
+
 export function ListMaterial() {
   //Resultado de consumo del API, respuesta
  const[data,setData]=useState(null);
@@ -19,40 +22,62 @@ export function ListMaterial() {
  const[error,setError]=useState('');
  //Booleano para establecer sí se ha recibido respuesta
  const[loaded,setLoaded]=useState(false);
+ const material= [{
+  "MaterialID": "1",
+  "Nombre": "Papel",
+  "Descripcion": "Hoja delgada hecha con pasta de fibras vegetales obtenidas de trapos, madera, paja, etc., molidas, blanqueadas y desleídas en agua, que se hace secar y endurecer por procedimientos especiales.",
+  "Imagen": papel,
+  "UnidadMedida": "pulgadas",
+  "Color": "blanco",
+  "Precio": "250"
+      },
+      {
+        "MaterialID": "2",
+        "Nombre": "Plastico",
+        "Descripcion": " material constituido por compuestos orgánicos o sintéticos que tienen la propiedad de ser maleables y por tanto pueden ser moldeados en objetos sólidos de diversas formas. Esta propiedad confiere a los plásticos una gran variedad de aplicaciones.",
+        "Imagen": plastico,
+        "UnidadMedida": "galga",
+        "Color": "azul",
+        "Precio": "150"
+  
+      },
+      {
+        "MaterialID": "3",
+        "Nombre": "Vidrio",
+        "Descripcion": " material inorgánico duro, frágil, transparente y amorfo que se encuentra en la naturaleza, aunque también puede ser producido por el ser humano.",
+        "Imagen": vidrio,
+        "UnidadMedida": "milimetros",
+        "Color": "azul",
+        "Precio": "150"
+  
+      },
+  ]
   useEffect(()=>{
-    //Llamar al API y obtener la lista de peliculas
-    const material= [{
-"MaterialID": "1",
-"Nombre": "Papel",
-"descripcion": "Hoja delgada hecha con pasta de fibras vegetales obtenidas de trapos, madera, paja, etc., molidas, blanqueadas y desleídas en agua, que se hace secar y endurecer por procedimientos especiales.",
-"Imagen": {papel},
-"UnidadMedida": "pulgadas",
-"Color": "blanco",
-"Precio": "250"
-    },
-]
-    MovieService.getMovies()
-    .then( response=>{
-      setData(response.data.results)
-      console.log(response.data)
-      setError(response.error)
-      setLoaded(true)
-    }
-    ).catch( error=>{
-      console.log(error)
-      setError(error)
-      throw new Error("Respuesta no válida del servidor")
-    }      
-    )
+    setLoaded(true);
+  
+    // MovieService.getMovies()
+    // .then( response=>{
+    //   setData(response.data.results)
+    //   console.log(response.data)
+    //   setError(response.error)
+    //   setLoaded(true)
+    // }
+    // ).catch( error=>{
+    //   console.log(error)
+    //   setError(error)
+    //   throw new Error("Respuesta no válida del servidor")
+    // }      
+    // )
   },[])
 
   if(!loaded) return <p>Cargando...</p>
   if(error) return <p>Error: {error.message}</p>
-
+console.log(material[0].Imagen.papel);
   return (
     <Grid container sx={{ p: 2 }} spacing={3}>     
-     {data && data.map((item)=>(  
-          <Grid item xs={4} key={item.id}   >
+     {material && material.map((item)=>(  
+    
+          <Grid item xs={4} key={item.MaterialID}   >
             <Card>
               <CardHeader
                 sx={{
@@ -61,15 +86,17 @@ export function ListMaterial() {
                   color: (theme) => theme.palette.common.white
                 }}
                 style={{ textAlign: 'center' }}
-                title={item.title}
-                subheader={item.year}
+                title={item.Nombre}
+                subheader={item.Descripcion}
+                
               />
               <CardContent>
+                <img src={item.Imagen} alt="" width={'100%'} height={'100%'} />
                 <Typography variant='body2' color='text.secondary'>
-                  <AccessTime /> {item.time}   minutos
+                  <ColorLens /> {item.Color}   
                 </Typography>
                 <Typography variant='body2' color='text.secondary'>
-                  <Language /> {item.lang}
+                  <AttachMoney /> {item.Precio}
                 </Typography>
               </CardContent>
               <CardActions
@@ -79,7 +106,7 @@ export function ListMaterial() {
                   color: (theme) => theme.palette.common.white
                 }}
               >
-                <IconButton component={Link} to={`/movie/${item.id}`} aria-label='Detalle' sx={{ ml: 'auto' }}>
+                <IconButton component={Link} to={`/movie/${item.MaterialID}`} aria-label='Detalle' sx={{ ml: 'auto' }}>
                   <Info/>
                 </IconButton>
               </CardActions>
