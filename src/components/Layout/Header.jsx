@@ -92,7 +92,7 @@ function Header() {
                 <MenuItem component='a' href='/movie/'>
                   <Typography textAlign="center"></Typography>
                 </MenuItem>
-                <MenuItem component='a' href='/movie-table/'>
+                <MenuItem component='a' href='/materiales/'>
                   <Typography textAlign="center"></Typography>
                 </MenuItem>
             </Menu>
@@ -147,8 +147,8 @@ function Header() {
               <MenuItem component='a' href='/movie/'>
                   <Typography textAlign="center">Mantenimiento Usuarios</Typography>
                 </MenuItem>
-                <MenuItem component='a' href='/movie-table/'>
-                  <Typography textAlign="center">Mantenimiento Materiales</Typography>
+                <MenuItem component='a' href='/materiales/'>
+                  <Typography textAlign="center">Lista Materiales</Typography>
                 </MenuItem>
             
             </Menu>

@@ -4,7 +4,7 @@ import { Layout } from './components/Layout/Layout'
 import { Home } from './components/Home/Home'
 import { PageNotFound } from './components/Home/PageNotFound'
 import { ListMovies } from './components/Movie/ListMovies'
-import TableMovies from './components/Movie/TableMovies'
+import Materiales from './components/Materiales/Materiales'
 import { DetailMovie } from './components/Movie/DetailMovie'
 import { Login } from '@mui/icons-material'
 
@@ -22,8 +22,8 @@ const router= createBrowserRouter([
     element: <ListMovies />
   },
   {
-    path: '/movie-table',
-    element: <TableMovies />
+    path: '/materiales',
+    element: <Materiales />
   },
 
   {

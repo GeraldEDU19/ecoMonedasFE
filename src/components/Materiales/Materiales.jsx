@@ -1,10 +1,10 @@
 import React from 'react'
-import { ListMaterial } from './Form/listMaterial'
+import { ListMateriales } from './Components/List-Materiales'
 
 export default function TableMovies() {
   return (
     <>
-    <ListMaterial/>
+    <ListMateriales/>
      </>
   )
 }
