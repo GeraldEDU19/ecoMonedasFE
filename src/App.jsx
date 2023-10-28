@@ -5,6 +5,7 @@ import { Home } from './components/Home/Home'
 import { PageNotFound } from './components/Home/PageNotFound'
 import { ListMovies } from './components/Movie/ListMovies'
 import Materiales from './components/Materiales/Materiales'
+import CentrosAcopio from './components/Centros-Acopio/Centros-Acopio'
 import { DetailMovie } from './components/Movie/DetailMovie'
 import { Login } from '@mui/icons-material'
 
@@ -27,7 +28,7 @@ const router= createBrowserRouter([
   },
   {
     path: '/centroAcopio',
-    element: <Materiales />
+    element: <CentrosAcopio />
   },
   {
     path: '/movie/:id',
