@@ -95,6 +95,9 @@ function Header() {
                 <MenuItem component='a' href='/materiales/'>
                   <Typography textAlign="center"></Typography>
                 </MenuItem>
+                <MenuItem component='a' href='/centroAcopio/'>
+                  <Typography textAlign="center"></Typography>
+                </MenuItem>
             </Menu>
           </Box>
           <MovieIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -150,7 +153,9 @@ function Header() {
                 <MenuItem component='a' href='/materiales/'>
                   <Typography textAlign="center">Lista Materiales</Typography>
                 </MenuItem>
-            
+                <MenuItem component='a' href='/centroAcopio/'>
+                  <Typography textAlign="center">Lista Centro de acopio</Typography>
+                </MenuItem>
             </Menu>
           </Box>
 {/* Menu de Matenimientos */}
