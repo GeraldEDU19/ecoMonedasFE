@@ -8,10 +8,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { AttachMoney, Info} from "@mui/icons-material";
 import { IconButton } from "@mui/material";
-import { Link } from "react-router-dom";
-// import papel from '../../../assets/papel.png'
-// import plastico from '../../../assets/plastico.png'
-// import vidrio from '../../../assets/vidrio.png'
+ 
 
 export function ListMateriales() {
   //Resultado de consumo del API, respuesta
@@ -44,7 +41,7 @@ export function ListMateriales() {
     <Grid container sx={{ p: 2 }} spacing={3}>
       {data &&
         data.map((item) => (
-          <Grid item xs={4} key={item.MaterialID}>
+          <Grid item xs={4} key={item.ID}>
             <Card
               sx={{
                 border: `4px dotted ${item.Color}`,
@@ -86,7 +83,6 @@ export function ListMateriales() {
                 </Typography>
                 </div>
                 <IconButton
-                  component={Link}
                   to={`/movie/${item.MaterialID}`}
                   aria-label="Detalle"
                   sx={{ ml: "auto" }}
