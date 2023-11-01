@@ -8,6 +8,10 @@ import Materiales from './components/Materiales/Materiales'
 import CentrosAcopio from './components/Centros-Acopio/Centros-Acopio'
 import { DetailMovie } from './components/Movie/DetailMovie'
 import { Login } from '@mui/icons-material'
+import CanjesMaterialesMain from './components/Canje-Materiales/Canje-Materiales'
+import CanjesMaterialesByClienteMain from './components/Canje-Materiales/Canje-Materiales-By-Cliente'
+import CanjesMaterialesByAdministradorMain from './components/Canje-Materiales/Canje-Materiales-By-Administrador'
+import { DetailCanjeMateriales } from './components/Canje-Materiales/Components/Detail-Canje-Materiales'
 
 const router= createBrowserRouter([
   {
@@ -27,6 +31,18 @@ const router= createBrowserRouter([
     element: <Materiales />
   },
   {
+    path: '/canjesMateriales',
+    element: <CanjesMaterialesMain />
+  },
+  {
+    path: '/canjesMaterialesByCliente',
+    element: <CanjesMaterialesByClienteMain />
+  },
+  {
+    path: '/canjesMaterialesByAdministrador',
+    element: <CanjesMaterialesByAdministradorMain/>
+  },
+  {
     path: '/centroAcopio',
     element: <CentrosAcopio />
   },
@@ -34,7 +50,10 @@ const router= createBrowserRouter([
     path: '/movie/:id',
     element: <DetailMovie />
   },
-  
+  {
+    path: '/canjeDeMateriales/:id',
+    element: <DetailCanjeMateriales />
+  },
   {
     path: '/user/login',
     element : <Login />

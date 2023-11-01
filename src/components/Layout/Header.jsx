@@ -147,14 +147,17 @@ function Header() {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
             >
-              <MenuItem component='a' href='/movie/'>
-                  <Typography textAlign="center">Mantenimiento Usuarios</Typography>
-                </MenuItem>
                 <MenuItem component='a' href='/materiales/'>
                   <Typography textAlign="center">Lista Materiales</Typography>
                 </MenuItem>
                 <MenuItem component='a' href='/centroAcopio/'>
                   <Typography textAlign="center">Lista Centro de acopio</Typography>
+                </MenuItem>
+                <MenuItem component='a' href='/canjesMaterialesByCliente/'>
+                  <Typography textAlign="center">Lista Canjes Materiales Por Cliente</Typography>
+                </MenuItem>
+                <MenuItem component='a' href='/canjesMaterialesByAdministrador/'>
+                  <Typography textAlign="center">Lista Canjes Materiales Por Administrador</Typography>
                 </MenuItem>
             </Menu>
           </Box>

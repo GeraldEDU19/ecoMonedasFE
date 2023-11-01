@@ -12,6 +12,17 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import StarBorder from "@mui/icons-material/StarBorder";
 
+// import { makeStyles } from '@material-ui/core/styles';
+// import Table from '@material-ui/core/Table';
+// import TableBody from '@material-ui/core/TableBody';
+// import TableCell from '@material-ui/core/TableCell';
+// import TableContainer from '@material-ui/core/TableContainer';
+// import TableHead from '@material-ui/core/TableHead';
+// import TableRow from '@material-ui/core/TableRow';
+// import Paper from '@material-ui/core/Paper';
+
+
+
 import CentroAcopioService from "../Services/Service-Centros-Acopio";
 
 export function ListCentroAcopio() {
@@ -23,6 +34,7 @@ export function ListCentroAcopio() {
     CentroAcopioService.getCentros()
       .then((response) => {
         setData(response.data.results);
+        console.log("🚀 ~ file: List-Centros-Acopio.jsx:37 ~ .then ~ response.data.results:", response.data.results)
         setError(response.error);
         setLoaded(true);
       })
@@ -55,29 +67,28 @@ export function ListCentroAcopio() {
       }
     >
       {data && data.map((item, index) => (
-  <div key={item.ID}>
-    <ListItemButton onClick={() => handleItemClick(index)}>
-      <ListItemIcon>
+        <React.Fragment key={item.ID}>
+          <ListItemButton onClick={() => handleItemClick(index)}>
+          <ListItemIcon>
         <InboxIcon />
       </ListItemIcon>
       <ListItemText primary={item.Nombre} />
       {item.open ? <ExpandLess /> : <ExpandMore />}
-    </ListItemButton>
-    <Collapse in={item.open} timeout="auto" unmountOnExit>
-      <List component="div" disablePadding>
-        {item.Materiales && item.Materiales.map((material) => (
-          <ListItemButton key={material.ID} sx={{ pl: 4 }}>
-            <ListItemIcon>
+          </ListItemButton>
+          <Collapse in={item.open} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              {item.Materiales && item.Materiales.map((material) => (
+                <ListItemButton key={material.ID} sx={{ pl: 4 }}>
+                  <ListItemIcon>
               <StarBorder />
             </ListItemIcon>
             <ListItemText primary={material.Nombre} />
-          </ListItemButton>
-        ))}
-      </List>
-    </Collapse>
-  </div>
-))}
-
+                </ListItemButton>
+              ))}
+            </List>
+          </Collapse>
+        </React.Fragment>
+      ))}
     </List>
   );
 }
