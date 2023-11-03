@@ -8,7 +8,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { AttachMoney, Info} from "@mui/icons-material";
 import { IconButton } from "@mui/material";
- 
+import { Link } from "react-router-dom";
 
 export function ListMateriales() {
   //Resultado de consumo del API, respuesta
@@ -17,7 +17,7 @@ export function ListMateriales() {
   const [error, setError] = useState("");
   //Booleano para establecer sí se ha recibido respuesta
   const [loaded, setLoaded] = useState(false);
-
+const color= '#57C407';
   useEffect(() => {
     setLoaded(true);
 
@@ -44,7 +44,7 @@ export function ListMateriales() {
           <Grid item xs={4} key={item.ID}>
             <Card
               sx={{
-                border: `4px dotted ${item.Color}`,
+                border: `4px dotted ${color}`,
                 borderRadius: "10px",
               }}
             >
@@ -56,7 +56,7 @@ export function ListMateriales() {
                 }}
                 style={{ textAlign: "center" }}
                 title={item.Nombre}
-                subheader={item.Descripcion}
+               
               />
               <CardContent>
                 <img
@@ -69,8 +69,8 @@ export function ListMateriales() {
               <CardActions
                 disableSpacing
                 sx={{
-                  backgroundColor: (theme) => theme.palette.action.focus,
-                  color: (theme) => theme.palette.common.white,
+                  backgroundColor:  item.Color,
+                  color: item.Color,
                 }}
               >
                 <div>
@@ -82,13 +82,9 @@ export function ListMateriales() {
                   <AttachMoney /> <span><strong>{item.Precio}</strong></span>
                 </Typography>
                 </div>
-                <IconButton
-                  to={`/movie/${item.MaterialID}`}
-                  aria-label="Detalle"
-                  sx={{ ml: "auto" }}
-                >
+                <IconButton component={Link} to={`/material/${item.ID}`} aria-label='Detalle' sx={{ ml: 'auto' }}>
                   <Info />
-                </IconButton>
+                </IconButton >
               </CardActions>
             </Card>
           </Grid>

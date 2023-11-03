@@ -8,8 +8,8 @@ import axios from'axios';
     return axios.get(BASE_URL);
   }
   //localhost:81/api/movie/2
-  getMovieById(MovieId){
-    return axios.get(BASE_URL+"/"+MovieId)
+  getMaterialById(MaterialId){
+    return axios.get(BASE_URL+"/"+MaterialId)
   }
  }
  export default new MaterialesService()

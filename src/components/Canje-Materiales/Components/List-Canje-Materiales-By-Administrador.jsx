@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import * as React from 'react';
 import CanjeMaterialesService from "../Services/Service-Canje-Materiales";
 import UsuariosService from "../../Usuarios/Services/Service-Usuarios";
-import Typography from "@mui/material/Typography";
+
 import { useNavigate } from 'react-router-dom';
 
  
