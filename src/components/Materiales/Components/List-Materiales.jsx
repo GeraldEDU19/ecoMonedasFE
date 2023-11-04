@@ -17,7 +17,6 @@ export function ListMateriales() {
   const [error, setError] = useState("");
   //Booleano para establecer sí se ha recibido respuesta
   const [loaded, setLoaded] = useState(false);
-const color= '#57C407';
   useEffect(() => {
     setLoaded(true);
 
@@ -44,7 +43,7 @@ const color= '#57C407';
           <Grid item xs={4} key={item.ID}>
             <Card
               sx={{
-                border: `4px dotted ${color}`,
+                border: `1px solid black`,
                 borderRadius: "10px",
               }}
             >

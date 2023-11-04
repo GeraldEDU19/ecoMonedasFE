@@ -11,7 +11,7 @@ import SendIcon from "@mui/icons-material/Send";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import StarBorder from "@mui/icons-material/StarBorder";
-
+import { Card, CardContent, Typography, Box, ListItem } from '@mui/material';
 // import { makeStyles } from '@material-ui/core/styles';
 // import Table from '@material-ui/core/Table';
 // import TableBody from '@material-ui/core/TableBody';
@@ -56,40 +56,31 @@ export function ListCentroAcopio() {
   };
 
   return (
-    <List
-      sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-      component="nav"
-      aria-labelledby="nested-list-subheader"
-      subheader={
-        <ListSubheader component="div" id="nested-list-subheader">
-          Centros de Acopio
-        </ListSubheader>
-      }
-    >
+    <div style={{ display: 'flex', overflowX: 'auto' }}>
       {data && data.map((item, index) => (
-        <React.Fragment key={item.ID}>
-          <ListItemButton onClick={() => handleItemClick(index)}>
-          <ListItemIcon>
-        <InboxIcon />
-      </ListItemIcon>
-      <ListItemText primary={item.Nombre} />
-      {item.open ? <ExpandLess /> : <ExpandMore />}
-          </ListItemButton>
-          <Collapse in={item.open} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
+        <Card key={item.ID} sx={{ minWidth: 275, maxWidth: 320, marginRight: 2 }}>
+          <CardContent>
+            <Typography variant="h5" component="div">
+              {item.Nombre}
+            </Typography>
+            <List>
               {item.Materiales && item.Materiales.map((material) => (
-                <ListItemButton key={material.ID} sx={{ pl: 4 }}>
+                <ListItem key={material.ID} onClick={() => handleItemClick(material.ID)}>
                   <ListItemIcon>
-              <StarBorder />
-            </ListItemIcon>
-            <ListItemText primary={material.Nombre} />
-                </ListItemButton>
+                    <StarBorder />
+                  </ListItemIcon>
+                  <ListItemText primary={material.Nombre} />
+                </ListItem>
               ))}
             </List>
-          </Collapse>
-        </React.Fragment>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+              {item.open ? <ExpandLess /> : <ExpandMore />}
+            </Box>
+          </CardContent>
+        </Card>
       ))}
-    </List>
+    </div>
   );
+
 }
 

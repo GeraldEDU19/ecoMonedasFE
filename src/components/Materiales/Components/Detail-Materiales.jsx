@@ -24,7 +24,7 @@ import ServiceMateriales from "../Services/Service-Materiales";
   useEffect(()=>{
     ServiceMateriales.getMaterialById(routeParams.id)
     .then( response=>{
-      setData(response.data.results)
+      setData((response.data.results).pop())
       console.log(response.data)
       setError(response.error)
       setLoaded(true)
@@ -40,54 +40,41 @@ import ServiceMateriales from "../Services/Service-Materiales";
 
   if(!loaded) return <p>Cargando...</p>
   if(error) return <p>Error: {error.message}</p>
-    return (
-      <Container component='main' sx={{ mt: 8, mb: 2 }} >
-      {data && ( 
-          <Grid container spacing={2}>
-            
-            <Grid item={true} xs={5} >  
-            <Box component='img'
-            sx={{
-              borderRadius:'4%',
-              maxWidth:'100%',
-              height: 'auto',
-            }}
-            alt="Detalle Material"
-            />  
-              
-            </Grid>
-            <Grid item={true} xs={7}>
-              
-                <Typography variant='h4' component='h1' gutterBottom>
-                {data.Nombre}
-                </Typography>
-                <Typography variant='subtitle1' component='h1' gutterBottom>
-                {data.Descripcion}
-                <CardContent>
-                <img
-                  src={`/assets/${data.Imagen}`}
-                  alt=""
-                  width={"100%"}
-                  height={"100%"}
-                />
-              </CardContent>
-                </Typography>
-                <Typography component='span' variant='subtitle1' display='block'>
-                  <Box fontWeight='bold' display='inline'>
-                    Unidad de medida: {data.UnidadMedida}
-                  </Box>{' '}
-             
-                </Typography>
-                <Typography component='span' variant='subtitle1' display='block'>
-                  <Box fontWeight='bold' display='inline'>
-                    Precio: 
-                  </Box>{' '}
-                  {data.Precio}
-                </Typography>
-             
-            </Grid>
+  return (
+    <Container component='main' sx={{ mt: 8, mb: 2 }}>
+      {data && (
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={7}>
+            <Typography variant='h4' component='h1' gutterBottom>
+              {data.Nombre}
+            </Typography>
+            <Typography variant='subtitle1' gutterBottom>
+              {data.Descripcion}
+            </Typography>
+            <Typography component='span' variant='subtitle1' display='block'>
+              <Box fontWeight='bold' display='inline'>
+                Unidad de medida: {data.UnidadMedida}
+              </Box>
+            </Typography>
+            <Typography component='span' variant='subtitle1' display='block'>
+              <Box fontWeight='bold' display='inline'>
+                Precio:
+              </Box>{' '}
+              {data.Precio}
+            </Typography>
           </Grid>
-        )}
-      </Container>
-    );
+          <Grid item xs={12} md={5}>
+            <CardContent>
+              <img
+                src={`/assets/${data.Imagen}`}
+                alt=""
+                style={{ width: '90%', height: 'auto', maxWidth: '90%' }} // Ajusta el tamaño de la imagen
+              />
+            </CardContent>
+          </Grid>
+        </Grid>
+      )}
+    </Container>
+  );
+
   }
