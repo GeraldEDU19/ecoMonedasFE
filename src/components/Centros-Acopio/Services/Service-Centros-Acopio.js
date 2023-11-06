@@ -7,6 +7,9 @@ class CentroAcopioService{
       return axios.get(BASE_URL);
     }
     //localhost:81/api/movie/2
+    getCentroById(CentroAcopioId){
+      return axios.get(BASE_URL+"/"+CentroAcopioId)
+    }
    
    }
    export default new CentroAcopioService()

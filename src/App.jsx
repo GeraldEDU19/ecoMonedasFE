@@ -13,6 +13,7 @@ import CanjesMaterialesByClienteMain from './components/Canje-Materiales/Canje-M
 import CanjesMaterialesByAdministradorMain from './components/Canje-Materiales/Canje-Materiales-By-Administrador'
 import { DetailCanjeMateriales } from './components/Canje-Materiales/Components/Detail-Canje-Materiales'
 import { DetailMateriales } from './components/Materiales/Components/Detail-Materiales'
+import { DetailCentroAcopio } from './components/Centros-Acopio/Components/Detail-CentroAcopio'
 const router= createBrowserRouter([
   {
     path:'/',
@@ -58,6 +59,10 @@ const router= createBrowserRouter([
 path: '/material/:id',
 element: <DetailMateriales/> 
   },
+  {
+    path: '/centroAcopio/:id',
+    element: <DetailCentroAcopio/> 
+      },
   {
     path: '/user/login',
     element : <Login />
