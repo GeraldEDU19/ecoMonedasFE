@@ -2,13 +2,20 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Grid, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 
 import ServiceCentroAcopio from "../Services/Service-Centros-Acopio";
 
 export function DetailCentroAcopio() {
+
+  const navigate = useNavigate();
+  const handleMaterialClick = (ID) => {// Obtener el ID del canje de materiales seleccionado
+    navigate(`/material/${ID}`);
+  };
+
+
   const routeParams = useParams()
   console.log(routeParams)
 
@@ -36,6 +43,9 @@ export function DetailCentroAcopio() {
 
   if (!loaded) return <p>Cargando...</p>;
   if (error) return <p>Error: {error.message}</p>;
+
+
+  
 
   return (
     <Container component='main' sx={{ mt: 8, mb: 2 }}>
@@ -80,6 +90,7 @@ export function DetailCentroAcopio() {
                     alignItems: "center",
                     cursor: "pointer",
                   }}
+                  onClick={() => handleMaterialClick(material.ID)}
                 >
                   <ListItemIcon>
                     <ArrowForwardIosIcon />

@@ -45,10 +45,14 @@ export function DetailCanjeMateriales() {
   if (!loaded) return <p>Cargando...</p>;
   if (error) return <p>Error: {error.message}</p>;
   return (
-    <Container component="main" sx={{ mt: 8, mb: 2 }}>
+    <Container component="main" sx={{ mt: 2, mb: 2 }}>
       {data && (
-        <Grid container spacing={2}>
+        <div>
+        <Grid container spacing={1}>
           <Grid item={true} xs={7}>
+          <Typography variant="h3" component="h1" gutterBottom>
+              Número Factura: {data.ID}
+            </Typography>
             <Typography variant="h4" component="h1" gutterBottom>
               {data.title}
             </Typography>
@@ -150,78 +154,26 @@ export function DetailCanjeMateriales() {
                     </tr>
                   ))}
 
-<tr key={-1}>
-                      <td
-                        style={{
-                          border: "1px solid #dddddd",
-                          padding: "8px",
-                          textAlign: "left",
-                        }}
-                        
-                      >
-                        <Box fontWeight="bold">Total de EcoMonedas:</Box>
-                      </td>
-                      <td
-                        style={{
-                          border: "1px solid #dddddd",
-                          padding: "8px",
-                          textAlign: "left",
-                        }}
-                      >
-                      </td>
-                      <td
-                        style={{
-                          border: "1px solid #dddddd",
-                          padding: "8px",
-                          textAlign: "left",
-                        }}
-                      >
-                        {data.TotalEcoMonedas}
-                      </td>
-                    </tr>
-
                 </tbody>
               </table>
+              
             </div>
 
-            <Typography component="span" variant="subtitle1">
-              <List
-                sx={{
-                  width: "100%",
-                  maxWidth: 360,
-                  bgcolor: "background.paper",
-                }}
-              > 
-                {/* {data.genres.map((item)=>(
-                      <ListItemButton key= {item.id}>
-                        <ListItemIcon>
-                         <ArrowRightIcon/>
-                         </ListItemIcon>
-                         <ListItemText primary={item.title}/>
-                      </ListItemButton>
-                    ))} */}
-              </List>
-            </Typography>
-            <Typography component="span" variant="subtitle1">
-              <List
-                sx={{
-                  width: "100%",
-                  maxWidth: 360,
-                  bgcolor: "background.paper",
-                }}
-              >
-                {/* {data.actors.map((item)=>(
-                      <ListItemButton key= {item.id}>
-                        <ListItemIcon>
-                         <ArrowRightIcon/>
-                         </ListItemIcon>
-                         <ListItemText primary={'${item.fname} ${item.lname}'}/>
-                      </ListItemButton>
-                    ))} */}
-              </List>
-            </Typography>
+            
+
           </Grid>
+
+
+          
         </Grid>
+        <div style={{textAlign: "right"}}>
+              <Typography component="span" variant="subtitle1" display="block">
+                <Box fontWeight="bold" display="inline">
+                  Total de EcoMonedas: {data.TotalEcoMonedas}
+                </Box>
+              </Typography>
+            </div>
+        </div>
       )}
     </Container>
   );

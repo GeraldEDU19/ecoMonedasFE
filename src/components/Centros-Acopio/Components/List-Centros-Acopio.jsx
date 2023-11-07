@@ -34,7 +34,10 @@ export function ListCentroAcopio() {
       <Grid container spacing={3}>
         {data && data.map((item) => (
           <Grid item xs={12} sm={6} md={4} key={item.ID}>
-            <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
+            <Card sx={{ 
+              height: "100%", display: "flex", flexDirection: "column", 
+              border: "1px solid lightgrey"
+              }}>
               <CardContent>
                 <Typography variant="h6" component="div">
                   {item.Nombre}
