@@ -159,6 +159,9 @@ function Header() {
                 <MenuItem component='a' href='/canjesMaterialesByAdministrador/'>
                   <Typography textAlign="center">Lista Canjes Materiales Por Administrador</Typography>
                 </MenuItem>
+                <MenuItem component='a' href='/material/crear/'>
+                  <Typography textAlign="center">Crear Material</Typography>
+                </MenuItem>
             </Menu>
           </Box>
 {/* Menu de Matenimientos */}

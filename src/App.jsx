@@ -14,6 +14,7 @@ import CanjesMaterialesByAdministradorMain from './components/Canje-Materiales/C
 import { DetailCanjeMateriales } from './components/Canje-Materiales/Components/Detail-Canje-Materiales'
 import { DetailMateriales } from './components/Materiales/Components/Detail-Materiales'
 import { DetailCentroAcopio } from './components/Centros-Acopio/Components/Detail-CentroAcopio'
+import { CreateMaterial } from './components/Materiales/Form/CreateMaterial'
 const router= createBrowserRouter([
   {
     path:'/',
@@ -66,7 +67,15 @@ element: <DetailMateriales/>
   {
     path: '/user/login',
     element : <Login />
-  }
+  },
+  {
+    path: 'material/crear',
+    element: <CreateMaterial/>
+  },
+ /*  {
+    path: 'movie/update/:id',
+    element: <UpdateMovie/>
+  }, */
 ])
 
 export default function App(){
