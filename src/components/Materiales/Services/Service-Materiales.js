@@ -11,8 +11,8 @@ import axios from'axios';
   getMaterialById(MaterialId){
     return axios.get(BASE_URL+"/"+MaterialId)
   }
-  createMaterial(Material){
-    return axios.post(BASE_URL, Material);
+  createMaterial(Materiales){
+    return axios.post(BASE_URL, Materiales);
 }
  }
  export default new MaterialesService()

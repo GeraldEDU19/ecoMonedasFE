@@ -11,7 +11,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
 
-import MaterialService from '../services/Service-Materiales';
+import MaterialService from '../Services/Service-Materiales';
 import { toast } from 'react-hot-toast';
 
 //https://www.npmjs.com/package/@hookform/resolvers
@@ -62,7 +62,7 @@ export function CreateMaterial() {
       Imagen: '',
       UnidadMedida: '',
       Color: '',
-      Precio: 0
+      Precio: 0.0
        ,
      
     },
@@ -99,7 +99,7 @@ export function CreateMaterial() {
     try {
       if (materialSchema.isValid()) {
         //Crear material
-        MaterialService.createMaterial(DataForm)
+        MaterialService.createMaterial(DataForm.results)
           .then((response) => {
             console.log(response);
             setError(response.error);
@@ -154,8 +154,8 @@ export function CreateMaterial() {
                     {...field}
                     id='Nombre'
                     label='Nombre'
-                    error={Boolean(errors.Tipo)}
-                    helperText={errors.Tipo ? errors.Nombre.message : ' '}
+                    error={Boolean(errors.Nombre)}
+                    helperText={errors.Nombre ? errors.Nombre.message : ' '}
                   />
                 )}
               />
@@ -172,7 +172,7 @@ export function CreateMaterial() {
                     id='Tipo'
                     label='Tipo'
                     error={Boolean(errors.Tipo)}
-                    helperText={errors.year ? errors.Tipo.message : ' '}
+                    helperText={errors.Tipo ? errors.Tipo.message : ' '}
                   />
                 )}
               />
