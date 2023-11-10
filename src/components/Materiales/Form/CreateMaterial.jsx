@@ -95,34 +95,35 @@ export function CreateMaterial() {
   const onSubmit = (DataForm) => {
     console.log('Formulario:');
     console.log(DataForm);
-
+  
     try {
       if (materialSchema.isValid()) {
-        //Crear material
-        MaterialService.createMaterial(DataForm.results)
+        // Create material
+        MaterialService.createMaterial(DataForm)
           .then((response) => {
             console.log(response);
             setError(response.error);
-            //Respuesta al usuario de creación
+    
+            // Response to user for creation
             if (response.data.results != null) {
               toast.success(response.data.results, {
                 duration: 4000,
                 position: 'top-center',
               });
-              // Redireccion a la tabla
-              return navigate('/materiales');
             }
+    
+            // Redirect to the table regardless of the response
+         
+            navigate('/materiales?created=true');
           })
           .catch((error) => {
-            if (error instanceof SyntaxError) {
-              console.log(error);
-              setError(error);
-              throw new Error('Respuesta no válida del servidor');
-            }
+            console.error("Error creating material:", error);
+            // Handle error (e.g., show error message)
           });
       }
-    } catch (e) {
-      //Capturar error
+    } catch (error) {
+      console.error("Error in material creation process:", error);
+      // Handle synchronous errors
     }
   };
 

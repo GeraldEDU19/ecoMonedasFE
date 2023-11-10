@@ -15,6 +15,8 @@ import { DetailCanjeMateriales } from './components/Canje-Materiales/Components/
 import { DetailMateriales } from './components/Materiales/Components/Detail-Materiales'
 import { DetailCentroAcopio } from './components/Centros-Acopio/Components/Detail-CentroAcopio'
 import { CreateMaterial } from './components/Materiales/Form/CreateMaterial'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const router= createBrowserRouter([
   {
     path:'/',
@@ -81,7 +83,10 @@ element: <DetailMateriales/>
 export default function App(){
   return (
     <Layout>
+      <ToastContainer/>
         <RouterProvider router={router} />
+
     </Layout>
+   
   )
 }
