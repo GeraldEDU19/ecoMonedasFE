@@ -1,22 +1,169 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import FormControl from '@mui/material/FormControl';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-
+import { TextField, Button, Box, InputAdornment, Input, InputLabel, FormHelperText  } from '@mui/material';
 import { useForm, Controller} from 'react-hook-form';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-
+import { ChromePicker } from 'react-color'
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 import MaterialService from '../Services/Service-Materiales';
 import { toast } from 'react-hot-toast';
+import PropTypes from 'prop-types'; 
 
-//https://www.npmjs.com/package/@hookform/resolvers
+const ImageUploader = ({ field, fieldState }) => {
+  const [previewImage, setPreviewImage] = useState(null);
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewImage(reader.result);
+        field.onChange(reader.result); // Guarda la imagen en Base64 en el estado
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleButtonClick = () => {
+    // Simular un clic en el input de tipo file al hacer clic en el botón
+    document.getElementById('fileInput').click();
+  };
+
+  return (
+    <FormControl variant="standard" fullWidth sx={{ m: 1 }}>
+      <InputLabel htmlFor="fileInput">Imagen</InputLabel>
+      <Input
+        id="fileInput"
+        type="file"
+        inputProps={{ accept: 'image/*', style: { display: 'none' } }}
+        onChange={handleFileChange}
+        error={Boolean(fieldState?.error)}
+        sx={{ display: 'none' }} // Ocultamos el input real
+      />
+      <Button variant="contained" color="primary" onClick={handleButtonClick}>
+        Seleccionar Imagen
+      </Button>
+      {previewImage && (
+        <div style={{ textAlign: 'center', marginTop: '8px' }}>
+          <img
+            src={previewImage}
+            alt="Preview"
+            style={{
+              maxWidth: '100%',
+              borderRadius: '4px',
+              border: '1px solid #ccc',
+              marginTop: '8px',
+            }}
+          />
+        </div>
+      )}
+      <FormHelperText>{fieldState?.error?.message}</FormHelperText>
+    </FormControl>
+  );
+};
+
+ImageUploader.propTypes = {
+  field: PropTypes.shape({
+    onChange: PropTypes.func.isRequired,
+    value: PropTypes.string.isRequired,
+  }).isRequired,
+  fieldState: PropTypes.shape({
+    error: PropTypes.object,
+  }),
+};
+
+
+const ColorPicker = ({ field, fieldState }) => {
+  const [showColorPicker, setShowColorPicker] = useState(false);
+  const [pickerPosition, setPickerPosition] = useState({ top: 0, left: 0 });
+
+  const handleClick = (event) => {
+    const rect = event.target.getBoundingClientRect();
+    setPickerPosition({ top: rect.bottom + window.scrollY, left: rect.left + window.scrollX });
+    setShowColorPicker(!showColorPicker);
+  };
+
+  const handleClose = () => {
+    setShowColorPicker(false);
+  };
+
+  return (
+    <FormControl variant='standard' fullWidth sx={{ m: 1, position: 'relative' }}>
+      <TextField
+        {...field}
+        label="Color"
+        variant="outlined"
+        size="small"
+        InputProps={{
+          readOnly: true,
+        }}
+        onClick={handleClick}
+      />
+
+      {showColorPicker && (
+        <div
+          style={{
+            position: 'fixed',
+            zIndex: '1000',
+            top: pickerPosition.top + 'px',
+            left: pickerPosition.left + 'px',
+          }}
+        >
+          <ChromePicker
+            color={field.value}
+            onChange={(color) => {
+              field.onChange(color.hex);
+            }}
+            onChangeComplete={handleClose}
+          />
+        </div>
+      )}
+    </FormControl>
+  );
+};
+
+ColorPicker.propTypes = {
+  field: PropTypes.shape({
+    onChange: PropTypes.func.isRequired,
+    value: PropTypes.string.isRequired,
+  }).isRequired,
+  fieldState: PropTypes.shape({
+    error: PropTypes.object,
+  }),
+};
+
+ColorPicker.propTypes = {
+  field: PropTypes.shape({
+    onChange: PropTypes.func.isRequired,
+    value: PropTypes.string.isRequired,
+    // Agrega otras propiedades necesarias según sea necesario
+  }).isRequired,
+  fieldState: PropTypes.shape({
+    error: PropTypes.object, // O ajusta según tus necesidades
+  }),
+};
 
 export function CreateMaterial() {
+  const [created, setCreated] = useState(false);
+  useEffect(() => {
+    if (created) {
+      toast.success('Material creado', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  }, [created]);
   const navigate = useNavigate();
 
   // Esquema de validación
@@ -69,27 +216,13 @@ export function CreateMaterial() {
     // Asignación de validaciones
     resolver: yupResolver(materialSchema),
   });
-  //Definir seguimiento de actores con Watch
-  
-  /* const handleInputChange=(index, name, value)=>{
-    //actors.1.role='Rol 1'
-    setValue(name,value)
-    //Obtener los valores del formulario
-    const values=getValues()
-    console.log(values.actors[index])
-    let total='Reparto: '
-    values.actors.map((item)=>{
-      total+=`${item.role} `
-    })
-    setValue('total',total)
-  } */
-  // useFieldArray:
-  // relaciones de muchos a muchos, con más campos además
-  // de las llaves primaras
+
  
   
  
   const [error, setError] = useState('');
+  
+
 
   // Accion submit
   const onSubmit = (DataForm) => {
@@ -102,21 +235,15 @@ export function CreateMaterial() {
         MaterialService.createMaterial(DataForm)
           .then((response) => {
             console.log(response);
-            setError(response.error);
-    
+
             // Response to user for creation
-            if (response.data.results != null) {
-              toast.success(response.data.results, {
-                duration: 4000,
-                position: 'top-center',
-              });
-            }
-    
-            // Redirect to the table regardless of the response
-         
-            navigate('/materiales?created=true');
+            if(response) setCreated(true)
+            setTimeout(() => {
+              navigate('/materiales');
+            }, 2000);
           })
           .catch((error) => {
+            setError(error);
             console.error("Error creating material:", error);
             // Handle error (e.g., show error message)
           });
@@ -138,14 +265,12 @@ export function CreateMaterial() {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
-        <Grid container spacing={1}>
-          <Grid item xs={12} sm={12}>
-            <Typography variant='h5' gutterBottom>
-              Crear Material
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            {/* ['filled','outlined','standard']. */}
+        <Typography variant='h5' gutterBottom>
+          Crear Material
+        </Typography>
+  
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6}>
             <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
               <Controller
                 name='Nombre'
@@ -162,7 +287,8 @@ export function CreateMaterial() {
               />
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={4}>
+  
+          <Grid item xs={12} sm={6}>
             <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
               <Controller
                 name='Tipo'
@@ -179,8 +305,8 @@ export function CreateMaterial() {
               />
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={4}>
-            {/* ['filled','outlined','standard']. */}
+  
+          <Grid item xs={12}>
             <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
               <Controller
                 name='Descripcion'
@@ -189,7 +315,7 @@ export function CreateMaterial() {
                   <TextField
                     {...field}
                     id='Descripcion'
-                    label='Descripcion'
+                    label='Descripción'
                     error={Boolean(errors.Descripcion)}
                     helperText={errors.Descripcion ? errors.Descripcion.message : ' '}
                   />
@@ -197,25 +323,20 @@ export function CreateMaterial() {
               />
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={4}>
-            <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
+  
+          <Grid item xs={12} sm={6}>
+            <FormControl variant="standard" fullWidth sx={{ m: 1 }}>
               <Controller
-                name='Imagen'
+                name="Imagen"
                 control={control}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    id='Imagen'
-                    label='Imagen'
-                    error={Boolean(errors.Imagen)}
-                    helperText={errors.Imagen ? errors.Imagen.message : ' '}
-                  />
+                render={({ field, fieldState }) => (
+                  <ImageUploader field={field} fieldState={fieldState} />
                 )}
               />
             </FormControl>
           </Grid>
-         
-          <Grid item xs={12} sm={4}>
+  
+          <Grid item xs={12} sm={6}>
             <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
               <Controller
                 name='UnidadMedida'
@@ -232,24 +353,20 @@ export function CreateMaterial() {
               />
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={4}>
+  
+          <Grid item xs={12} sm={6}>
             <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
               <Controller
                 name='Color'
                 control={control}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    id='Color'
-                    label='Color'
-                    error={Boolean(errors.Color)}
-                    helperText={errors.Color ? errors.Color.message : ' '}
-                  />
+                render={({ field, fieldState }) => (
+                  <ColorPicker field={field} fieldState={fieldState} />
                 )}
               />
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={4}>
+  
+          <Grid item xs={12} sm={6}>
             <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
               <Controller
                 name='Precio'
@@ -266,19 +383,15 @@ export function CreateMaterial() {
               />
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={12}>
-            <Button
-              type='submit'
-              variant='contained'
-              color='secondary'
-              sx={{ m: 1 }}
-            >
+  
+          <Grid item xs={12}>
+            <Button type='submit' variant='contained' color='secondary' sx={{ mt: 2 }}>
               Guardar
             </Button>
           </Grid>
         </Grid>
       </form>
-     
     </>
   );
+  
 }
