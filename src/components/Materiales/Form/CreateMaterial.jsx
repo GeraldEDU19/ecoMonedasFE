@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 import FormControl from '@mui/material/FormControl';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import { TextField, Button, Box, InputAdornment, Input, InputLabel, FormHelperText  } from '@mui/material';
+import { TextField, Button,  Input, InputLabel, FormHelperText  } from '@mui/material';
 import { useForm, Controller} from 'react-hook-form';
 import { ChromePicker } from 'react-color'
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+
 
 import MaterialService from '../Services/Service-Materiales';
 import { toast } from 'react-hot-toast';
@@ -79,7 +79,7 @@ ImageUploader.propTypes = {
 };
 
 
-const ColorPicker = ({ field, fieldState }) => {
+const ColorPicker = ({ field }) => {
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [pickerPosition, setPickerPosition] = useState({ top: 0, left: 0 });
 

@@ -7,7 +7,7 @@ import { ListMovies } from './components/Movie/ListMovies'
 import Materiales from './components/Materiales/Materiales'
 import CentrosAcopio from './components/Centros-Acopio/Centros-Acopio'
 import { DetailMovie } from './components/Movie/DetailMovie'
-import { Login } from '@mui/icons-material'
+import { Create, Login } from '@mui/icons-material'
 import CanjesMaterialesMain from './components/Canje-Materiales/Canje-Materiales'
 import CanjesMaterialesByClienteMain from './components/Canje-Materiales/Canje-Materiales-By-Cliente'
 import CanjesMaterialesByAdministradorMain from './components/Canje-Materiales/Canje-Materiales-By-Administrador'
@@ -15,6 +15,7 @@ import { DetailCanjeMateriales } from './components/Canje-Materiales/Components/
 import { DetailMateriales } from './components/Materiales/Components/Detail-Materiales'
 import { DetailCentroAcopio } from './components/Centros-Acopio/Components/Detail-CentroAcopio'
 import { CreateMaterial } from './components/Materiales/Form/CreateMaterial'
+import { createCentroAcopio } from './components/Centros-Acopio/Form/CreateCentroAcopio'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const router= createBrowserRouter([
@@ -74,10 +75,10 @@ element: <DetailMateriales/>
     path: 'material/crear',
     element: <CreateMaterial/>
   },
- /*  {
-    path: 'movie/update/:id',
-    element: <UpdateMovie/>
-  }, */
+  {
+    path: 'centroAcopio/crear',
+    element: <createCentroAcopio/>
+  },
 ])
 
 export default function App(){
