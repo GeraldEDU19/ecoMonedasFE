@@ -12,41 +12,46 @@ import Tooltip from '@mui/material/Tooltip';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
-
-import ActorService from '../../services/ActorService';
-import CentroAcopioService from '../services/CentroAcopioService';
+import CentroAcopioService from '../../Centros-Acopio/Services/Service-Centros-Acopio';
 import { toast } from 'react-hot-toast';
-import CentroAcopioAdminService from '../Usuarios/Services/Service-Usuarios';
-import { SelectDirector } from './Form/SelectDirector';
-
-import { ActorsForm } from './Form/ActorsForm';
+import CentroAcopioAdminService from '../../Usuarios/Services/Service-Usuarios';
+import { SelectAdministrador } from '../../Centros-Acopio/Form/SelectAdministrador';
+import { MaterialesForm } from '../../Centros-Acopio/Form/MaterialesForm';
+import MaterialService from '../../Materiales/Services/Service-Materiales';
 //https://www.npmjs.com/package/@hookform/resolvers
 
-export function CreateMovie() {
+export function CreateCentroAcopio() {
   const navigate = useNavigate();
 
   // Esquema de validación
   const CentroAcopioSchema = yup.object({
     Nombre: yup
       .string()
-      .required('El título es requerido')
-      .min(2, 'El título debe tener 2 caracteres'),
+      .required('El Nombre es requerido')
+      .min(2, 'El Nombre debe tener 2 caracteres'),
     DireccionProvincia: yup
     .string()
-    .required('La duración es requerida'),
+    .required('La Provincia es requerida'),
     DireccionCanton: yup
-      .number()
-      .typeError('Solo acepta números')
-      .required('El año es requerido')
-      .positive('Solo acepta números positivos'),
+      .string()
+      .required('El Canton es requerido'),
     DireccionDistrito: yup
     .string()
-    .required('El idioma es requerido'),
+    .required('El Distrito es requerido'),
+    DireccionExacta: yup
+    .string()
+    .required('La direccion exacta es requerida'),
     AdministradorID: yup
       .number()
-      .typeError('El director es requerido')
-      .required('El director es requerido'),
- 
+      .typeError('El Administrador es requerido')
+      .required('El Administrador es requerido'),
+      Telefono: yup
+      .string()
+      .typeError('El telefono es requerido')
+      .required('El telefono es requerido'),
+      HorarioAtencion : yup
+      .string()
+      .required('El idioma es requerido'),
     Materiales: yup.array().of(
       yup.object().shape({
         actor_id: yup.number().typeError('El actor es requerido')
@@ -58,7 +63,6 @@ export function CreateMovie() {
     control,
     handleSubmit,
     setValue,
-    watch,
     getValues,
     formState: { errors },
   } = useForm({
@@ -68,11 +72,10 @@ export function CreateMovie() {
       DireccionDistrito: '',
       DireccionProvincia: '',
       AdministradorID: '',
-      genres: [],
       Materiales: [
         {
-         ID: '',
-          Tipo: '',
+         MaterialID: '',
+         
 
         },
       ],
@@ -82,7 +85,7 @@ export function CreateMovie() {
     resolver: yupResolver(CentroAcopioSchema),
   });
   //Definir seguimiento de actores con Watch
-  const watchActors=watch('Materiales')
+  
   const handleInputChange=(index, name, value)=>{
     //actors.1.role='Rol 1'
     setValue(name,value)
@@ -113,7 +116,7 @@ export function CreateMovie() {
   const addNewMaterial = () => {
     append({
       ID: '',
-      Tipo: '',
+      
     });
   };
   const [error, setError] = useState('');
@@ -177,20 +180,20 @@ export function CreateMovie() {
   
 
   //Lista de actores
-  const [dataActors, setDataActors] = useState({});
-  const [loadedActors, setLoadedActors] = useState(false);
+  const [dataMateriales, setDataMateriales] = useState({});
+  const [loadedMateriales, setLoadedMateriales] = useState(false);
   useEffect(() => {
-    ActorService.getActors()
+    MaterialService.getMateriales()
       .then((response) => {
         console.log(response);
-        setDataActors(response.data.results);
-        setLoadedActors(true);
+        setDataMateriales(response.data.results);
+        setLoadedMateriales(true);
       })
       .catch((error) => {
         if (error instanceof SyntaxError) {
           console.log(error);
           setError(error);
-          setLoadedActors(false);
+          setLoadedMateriales(false);
           throw new Error('Respuesta no válida del servidor');
         }
       });
@@ -203,7 +206,7 @@ export function CreateMovie() {
         <Grid container spacing={1}>
           <Grid item xs={12} sm={12}>
             <Typography variant='h5' gutterBottom>
-              Crear Pelicula
+              Crear Centro de Acopio
             </Typography>
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -284,7 +287,7 @@ export function CreateMovie() {
                   name='AdministradorID'
                   control={control}
                   render={({ field }) => (
-                    <SelectDirector
+                    <SelectAdministrador
                       field={field}
                       data={dataAdministrador}
                       error={Boolean(errors.AdministradorID)}
@@ -305,7 +308,7 @@ export function CreateMovie() {
          
           <Grid item xs={12} sm={6}>
             <Typography variant='h6' gutterBottom>
-              Actores
+              Materiales
               <Tooltip title='Agregar Material'>
                 <span>
                   <IconButton color='secondary' onClick={addNewMaterial}>
@@ -316,13 +319,13 @@ export function CreateMovie() {
             </Typography>
             <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
               {/* Array de controles de actor */}
-              {loadedActors &&
+              {loadedMateriales &&
                 fields.map((field, index) => (
                   <div key={index}>
-                    <ActorsForm
+                    <MaterialesForm
                       name='Materiales'
                       field={field}
-                      data={dataActors}
+                      data={dataMateriales}
                       key={field.id}
                       index={index}
                       onRemove={removeMateriales}
@@ -352,13 +355,7 @@ export function CreateMovie() {
                                 : ' '}
                             </Grid>
                           )}
-                          {errors?.Materiales[index]?.Tipo && (
-                            <Grid item xs={6}>
-                              {errors?.Materiales[index]?.Tipo
-                                ? errors?.Materiales[index]?.Tipo?.message
-                                : ' '}
-                            </Grid>
-                          )}
+                          
                         </Grid>
                       </FormHelperText>
                     )}
@@ -366,24 +363,7 @@ export function CreateMovie() {
                 ))}
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={4}>
-            <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
-              <Controller
-                name='total'
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    id='total'
-                    label='Total'
-                    InputProps={{
-                      readOnly: true,
-                    }}
-                  />
-                )}
-              />
-            </FormControl>
-          </Grid>
+          
           <Grid item xs={12} sm={12}>
             <Button
               type='submit'
@@ -396,16 +376,7 @@ export function CreateMovie() {
           </Grid>
         </Grid>
       </form>
-      <h3>Resultado Watch</h3>
-      {watchActors.map((item,index)=>{
-        return(
-          <p key={index}>
-            {index}.  Actor: {item.actor_id} , Rol: {item.role}
-          </p>
-        )
-      })
-
-      }
+     
     </>
   );
 }

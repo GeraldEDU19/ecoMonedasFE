@@ -162,7 +162,7 @@ function Header() {
                 <MenuItem component='a' href='/material/crear/'>
                   <Typography textAlign="center">Crear Material</Typography>
                 </MenuItem>
-                <MenuItem component='a' href='/material/crear/'>
+                <MenuItem component='a' href='/centroAcopio/crear/'>
                   <Typography textAlign="center">Crear Centro de acopio</Typography>
                 </MenuItem>
             </Menu>

@@ -15,9 +15,10 @@ import { DetailCanjeMateriales } from './components/Canje-Materiales/Components/
 import { DetailMateriales } from './components/Materiales/Components/Detail-Materiales'
 import { DetailCentroAcopio } from './components/Centros-Acopio/Components/Detail-CentroAcopio'
 import { CreateMaterial } from './components/Materiales/Form/CreateMaterial'
-import { createCentroAcopio } from './components/Centros-Acopio/Form/CreateCentroAcopio'
+
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { CreateCentroAcopio } from './components/Centros-Acopio/Form/CreateCentroAcopio'
 const router= createBrowserRouter([
   {
     path:'/',
@@ -77,7 +78,7 @@ element: <DetailMateriales/>
   },
   {
     path: 'centroAcopio/crear',
-    element: <createCentroAcopio/>
+    element: <CreateCentroAcopio/>
   },
 ])
 

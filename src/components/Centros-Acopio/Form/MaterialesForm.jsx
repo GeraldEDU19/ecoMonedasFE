@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import Tooltip from '@mui/material/Tooltip';
-import { SelectActors } from './SelectActors';
+import { SelectMateriales } from '../../Centros-Acopio/Form/SelectMateriales';
 import { Controller } from 'react-hook-form';
 import PropTypes from 'prop-types';
 
@@ -50,7 +50,7 @@ export function MaterialesForm({
                 name={`actors.${index}.actor_id`}
                 control={control}
                 render={({ field }) => (
-                  <SelectActors field={field} data={data}  
+                  <SelectMateriales field={field} data={data}  
                    />
                 )}
                
@@ -58,21 +58,9 @@ export function MaterialesForm({
               
             </ListItemText>
             <ListItemText sx={{ m: 1 }}>
-              <Controller
-                key={index}
-                name={`actors.${index}.role`}
-                control={control}
-                render={({ field }) => 
-                <TextField 
-                {...field}
-                label='Rol'
-                 onChange={(e)=>
-                  onInputChange(index,`actors.${index}.role`,e.target.value)} 
-                 />}
-              />
             </ListItemText>
             <ListItemIcon>
-              <Tooltip title={`Eliminar Actor ${index + 1}`}>
+              <Tooltip title={`Eliminar Material ${index + 1}`}>
                 <span>
                   <IconButton
                     key={index}
