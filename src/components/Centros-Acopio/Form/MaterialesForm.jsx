@@ -1,4 +1,4 @@
-import TextField from '@mui/material/TextField';
+
 import Grid from '@mui/material/Grid';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -20,6 +20,7 @@ MaterialesForm.propTypes = {
   onInputChange: PropTypes.func,
   disableRemoveButton: PropTypes.bool,
   field: PropTypes.object,
+  name: PropTypes.string
 };
 
 export function MaterialesForm({
@@ -27,8 +28,9 @@ export function MaterialesForm({
   control,
   index,
   onRemove,
+  name,
   disableRemoveButton,
-  onInputChange,
+  
   // eslint-disable-next-line no-unused-vars
   field,
 }) {
@@ -47,7 +49,7 @@ export function MaterialesForm({
             <ListItemText>
               <Controller
                 key={index}
-                name={`actors.${index}.actor_id`}
+                name={`${name}.${index}.ID`}
                 control={control}
                 render={({ field }) => (
                   <SelectMateriales field={field} data={data}  

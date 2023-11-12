@@ -1,23 +1,23 @@
-import { useEffect, useState } from 'react';
-import FormControl from '@mui/material/FormControl';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import { FormHelperText } from '@mui/material';
-import { useForm, Controller, useFieldArray } from 'react-hook-form';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import AddIcon from '@mui/icons-material/Add';
-import Tooltip from '@mui/material/Tooltip';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useNavigate } from 'react-router-dom';
-import CentroAcopioService from '../../Centros-Acopio/Services/Service-Centros-Acopio';
-import { toast } from 'react-hot-toast';
-import CentroAcopioAdminService from '../../Usuarios/Services/Service-Usuarios';
-import { SelectAdministrador } from '../../Centros-Acopio/Form/SelectAdministrador';
-import { MaterialesForm } from '../../Centros-Acopio/Form/MaterialesForm';
-import MaterialService from '../../Materiales/Services/Service-Materiales';
+import { useEffect, useState } from "react";
+import FormControl from "@mui/material/FormControl";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import { FormHelperText } from "@mui/material";
+import { useForm, Controller, useFieldArray } from "react-hook-form";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import AddIcon from "@mui/icons-material/Add";
+import Tooltip from "@mui/material/Tooltip";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useNavigate } from "react-router-dom";
+import CentroAcopioService from "../../Centros-Acopio/Services/Service-Centros-Acopio";
+import { toast } from "react-hot-toast";
+import CentroAcopioAdminService from "../../Usuarios/Services/Service-Usuarios";
+import { SelectAdministrador } from "../../Centros-Acopio/Form/SelectAdministrador";
+import { MaterialesForm } from "../../Centros-Acopio/Form/MaterialesForm";
+import MaterialService from "../../Materiales/Services/Service-Materiales";
 //https://www.npmjs.com/package/@hookform/resolvers
 
 export function CreateCentroAcopio() {
@@ -27,37 +27,26 @@ export function CreateCentroAcopio() {
   const CentroAcopioSchema = yup.object({
     Nombre: yup
       .string()
-      .required('El Nombre es requerido')
-      .min(2, 'El Nombre debe tener 2 caracteres'),
-    DireccionProvincia: yup
-    .string()
-    .required('La Provincia es requerida'),
-    DireccionCanton: yup
-      .string()
-      .required('El Canton es requerido'),
-    DireccionDistrito: yup
-    .string()
-    .required('El Distrito es requerido'),
-    DireccionExacta: yup
-    .string()
-    .required('La direccion exacta es requerida'),
+      .required("El Nombre es requerido")
+      .min(2, "El Nombre debe tener 2 caracteres"),
+    DireccionProvincia: yup.string().required("La Provincia es requerida"),
+    DireccionCanton: yup.string().required("El Canton es requerido"),
+    DireccionDistrito: yup.string().required("El Distrito es requerido"),
+    DireccionExacta: yup.string().required("La direccion exacta es requerida"),
     AdministradorID: yup
       .number()
-      .typeError('El Administrador es requerido')
-      .required('El Administrador es requerido'),
-      Telefono: yup
+      .typeError("El Administrador es requerido")
+      .required("El Administrador es requerido"),
+    Telefono: yup
       .string()
-      .typeError('El telefono es requerido')
-      .required('El telefono es requerido'),
-      HorarioAtencion : yup
-      .string()
-      .required('El idioma es requerido'),
-    Materiales: yup.array().of(
-      yup.object().shape({
-        actor_id: yup.number().typeError('El actor es requerido')
-        .required('El actor es requerido'),
-        role: yup.string().required('El rol es requerido'),
-      }))
+      .typeError("El telefono es requerido")
+      .required("El telefono es requerido"),
+    HorarioAtencion: yup.string().required("El idioma es requerido"),
+    //Materiales array is required
+    Materiales: yup
+      .array()
+      .required("Al menos un material es requerido")
+      .min(1, "Al menos un material es requerido"),
   });
   const {
     control,
@@ -67,43 +56,36 @@ export function CreateCentroAcopio() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      Nombre: '',
-      DireccionCanton: '',
-      DireccionDistrito: '',
-      DireccionProvincia: '',
-      AdministradorID: '',
-      Materiales: [
-        {
-         MaterialID: '',
-         
-
-        },
-      ],
-      total: 0
+      Nombre: "",
+      DireccionCanton: "",
+      DireccionDistrito: "",
+      DireccionProvincia: "",
+      AdministradorID: "",
+      Materiales: [],
     },
     // Asignación de validaciones
     resolver: yupResolver(CentroAcopioSchema),
   });
+
   //Definir seguimiento de actores con Watch
-  
-  const handleInputChange=(index, name, value)=>{
+  const handleInputChange = (index, name, value) => {
     //actors.1.role='Rol 1'
-    setValue(name,value)
+    setValue(name, value);
     //Obtener los valores del formulario
-    const values=getValues()
-    console.log(values.Materiales[index])
-    let total='Reparto: '
-    values.Materiales.map((item)=>{
-      total+=`${item.role} `
-    })
-    setValue('total',total)
-  }
+    const values = getValues();
+    console.log(values.Materiales[index]);
+    let total = "Reparto: ";
+    values.Materiales.map((item) => {
+      total += `${item.role} `;
+    });
+    setValue("total", total);
+  };
   // useFieldArray:
   // relaciones de muchos a muchos, con más campos además
   // de las llaves primaras
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'Material',
+    name: "Materiales",
   });
   // Eliminar actor de listado
   const removeMateriales = (index) => {
@@ -115,49 +97,49 @@ export function CreateCentroAcopio() {
   // Agregar un nuevo actor
   const addNewMaterial = () => {
     append({
-      ID: '',
-      
+      ID: "",
     });
   };
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   // Accion submit
   const onSubmit = (DataForm) => {
-    console.log('Formulario:');
+    console.log("Formulario:");
     console.log(DataForm);
 
     try {
       if (CentroAcopioSchema.isValid()) {
         //Crear pelicula
-        CentroAcopioService.createMovie(DataForm)
+        CentroAcopioService.createCentroAcopio(DataForm)
           .then((response) => {
-            console.log(response);
+            console.log("Respuesta del servicio", response);
             setError(response.error);
             //Respuesta al usuario de creación
             if (response.data.results != null) {
               toast.success(response.data.results, {
                 duration: 4000,
-                position: 'top-center',
+                position: "top-center",
               });
               // Redireccion a la tabla
-              return navigate('/movie-table');
+              return navigate("/centroAcopio");
             }
           })
           .catch((error) => {
             if (error instanceof SyntaxError) {
               console.log(error);
               setError(error);
-              throw new Error('Respuesta no válida del servidor');
+              throw new Error("Respuesta no válida del servidor");
             }
           });
       }
     } catch (e) {
       //Capturar error
+      console.log("ERROR AL CREAR EL CENTRO DE ACOPIO", e);
     }
   };
 
   // Si ocurre error al realizar el submit
-  const onError = (errors, e) => console.log(errors, e);
+  const onError = (errors, e) => console.log("ERRORES", errors, e);
   //Lista de Directores
   const [dataAdministrador, setDataAdministrador] = useState({});
   const [loadedAdministrador, setLoadedAdministrador] = useState(false);
@@ -173,11 +155,10 @@ export function CreateCentroAcopio() {
           console.log(error);
           setError(error);
           setLoadedAdministrador(false);
-          throw new Error('Respuesta no válida del servidor');
+          throw new Error("Respuesta no válida del servidor");
         }
       });
   }, []);
-  
 
   //Lista de actores
   const [dataMateriales, setDataMateriales] = useState({});
@@ -194,7 +175,7 @@ export function CreateCentroAcopio() {
           console.log(error);
           setError(error);
           setLoadedMateriales(false);
-          throw new Error('Respuesta no válida del servidor');
+          throw new Error("Respuesta no válida del servidor");
         }
       });
   }, []);
@@ -205,40 +186,23 @@ export function CreateCentroAcopio() {
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
         <Grid container spacing={1}>
           <Grid item xs={12} sm={12}>
-            <Typography variant='h5' gutterBottom>
+            <Typography variant="h5" gutterBottom>
               Crear Centro de Acopio
             </Typography>
           </Grid>
           <Grid item xs={12} sm={4}>
             {/* ['filled','outlined','standard']. */}
-            <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
+            <FormControl variant="standard" fullWidth sx={{ m: 1 }}>
               <Controller
-                name='Nombre'
+                name="Nombre"
                 control={control}
                 render={({ field }) => (
                   <TextField
                     {...field}
-                    id='Nombre'
-                    label='Nombre'
+                    id="Nombre"
+                    label="Nombre"
                     error={Boolean(errors.Nombre)}
-                    helperText={errors.Nombre ? errors.Nombre.message : ' '}
-                  />
-                )}
-              />
-            </FormControl>
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
-              <Controller
-                name='DireccionCanton'
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    id='DireccionCanton'
-                    label='Dirección Canton'
-                    error={Boolean(errors.DireccionCanton)}
-                    helperText={errors.DireccionCanton ? errors.DireccionCanton.message : ' '}
+                    helperText={errors.Nombre ? errors.Nombre.message : " "}
                   />
                 )}
               />
@@ -246,45 +210,138 @@ export function CreateCentroAcopio() {
           </Grid>
           <Grid item xs={12} sm={4}>
             {/* ['filled','outlined','standard']. */}
-            <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
+            <FormControl variant="standard" fullWidth sx={{ m: 1 }}>
               <Controller
-                name='DireccionProvincia'
+                name="DireccionProvincia"
                 control={control}
                 render={({ field }) => (
                   <TextField
                     {...field}
-                    id='DireccionProvincia'
-                    label='Direccion Provincia'
+                    id="DireccionProvincia"
+                    label="Direccion Provincia"
                     error={Boolean(errors.DireccionProvincia)}
-                    helperText={errors.DireccionProvincia ? errors.DireccionProvincia.message : ' '}
+                    helperText={
+                      errors.DireccionProvincia
+                        ? errors.DireccionProvincia.message
+                        : " "
+                    }
                   />
                 )}
               />
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
+            <FormControl variant="standard" fullWidth sx={{ m: 1 }}>
               <Controller
-                name='DireccionDistrito'
+                name="DireccionCanton"
                 control={control}
                 render={({ field }) => (
                   <TextField
                     {...field}
-                    id='DireccionDistrito'
-                    label='Direccion Distrito'
+                    id="DireccionCanton"
+                    label="Dirección Canton"
+                    error={Boolean(errors.DireccionCanton)}
+                    helperText={
+                      errors.DireccionCanton
+                        ? errors.DireccionCanton.message
+                        : " "
+                    }
+                  />
+                )}
+              />
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={12} sm={4}>
+            <FormControl variant="standard" fullWidth sx={{ m: 1 }}>
+              <Controller
+                name="DireccionDistrito"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    id="DireccionDistrito"
+                    label="Direccion Distrito"
                     error={Boolean(errors.DireccionDistrito)}
-                    helperText={errors.DireccionDistrito ? errors.DireccionDistrito.message : ' '}
+                    helperText={
+                      errors.DireccionDistrito
+                        ? errors.DireccionDistrito.message
+                        : " "
+                    }
                   />
                 )}
               />
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
+            <FormControl variant="standard" fullWidth sx={{ m: 1 }}>
+              <Controller
+                name="DireccionExacta"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    id="DireccionExacta"
+                    label="Direccion Exacta"
+                    error={Boolean(errors.DireccionDistrito)}
+                    helperText={
+                      errors.DireccionDistrito
+                        ? errors.DireccionDistrito.message
+                        : " "
+                    }
+                  />
+                )}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <FormControl variant="standard" fullWidth sx={{ m: 1 }}>
+              <Controller
+                name="Telefono"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    id="Telefono"
+                    label="Número de teléfono"
+                    error={Boolean(errors.DireccionDistrito)}
+                    helperText={
+                      errors.DireccionDistrito
+                        ? errors.DireccionDistrito.message
+                        : " "
+                    }
+                  />
+                )}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <FormControl variant="standard" fullWidth sx={{ m: 1 }}>
+              <Controller
+                name="HorarioAtencion"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    id="HorarioAtencion"
+                    label="Horario de Atención"
+                    error={Boolean(errors.DireccionDistrito)}
+                    helperText={
+                      errors.DireccionDistrito
+                        ? errors.DireccionDistrito.message
+                        : " "
+                    }
+                  />
+                )}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <FormControl variant="standard" fullWidth sx={{ m: 1 }}>
               {/* Lista de directores */}
               {loadedAdministrador && (
                 <Controller
-                  name='AdministradorID'
+                  name="AdministradorID"
                   control={control}
                   render={({ field }) => (
                     <SelectAdministrador
@@ -292,7 +349,7 @@ export function CreateCentroAcopio() {
                       data={dataAdministrador}
                       error={Boolean(errors.AdministradorID)}
                       onChange={(e) =>
-                        setValue('AdministradorID', e.target.value, {
+                        setValue("AdministradorID", e.target.value, {
                           shouldValidate: true,
                         })
                       }
@@ -300,30 +357,30 @@ export function CreateCentroAcopio() {
                   )}
                 />
               )}
-              <FormHelperText sx={{ color: '#d32f2f' }}>
-                {errors.AdministradorID ? errors.AdministradorID.message : ' '}
+              <FormHelperText sx={{ color: "#d32f2f" }}>
+                {errors.AdministradorID ? errors.AdministradorID.message : " "}
               </FormHelperText>
             </FormControl>
           </Grid>
-         
+
           <Grid item xs={12} sm={6}>
-            <Typography variant='h6' gutterBottom>
+            <Typography variant="h6" gutterBottom>
               Materiales
-              <Tooltip title='Agregar Material'>
+              <Tooltip title="Agregar Material">
                 <span>
-                  <IconButton color='secondary' onClick={addNewMaterial}>
+                  <IconButton color="secondary" onClick={addNewMaterial}>
                     <AddIcon />
                   </IconButton>
                 </span>
               </Tooltip>
             </Typography>
-            <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
+            <FormControl variant="standard" fullWidth sx={{ m: 1 }}>
               {/* Array de controles de actor */}
               {loadedMateriales &&
                 fields.map((field, index) => (
                   <div key={index}>
                     <MaterialesForm
-                      name='Materiales'
+                      name="Materiales"
                       field={field}
                       data={dataMateriales}
                       key={field.id}
@@ -333,15 +390,15 @@ export function CreateCentroAcopio() {
                       onInputChange={handleInputChange}
                       disableRemoveButton={fields.length === 1}
                       onChange={(e) =>
-                        setValue('Materiales', e.target.value, {
+                        setValue(`Materiales[${index}].ID`, e.target.value, {
                           shouldValidate: true,
                         })
                       }
                     />
                     {errors.Materiales && (
                       <FormHelperText
-                        component={'span'}
-                        sx={{ color: '#d32f2f' }}
+                        component={"span"}
+                        sx={{ color: "#d32f2f" }}
                       >
                         <Grid
                           container
@@ -352,10 +409,9 @@ export function CreateCentroAcopio() {
                             <Grid item xs={6}>
                               {errors?.Materiales[index]?.ID
                                 ? errors?.Materiales[index]?.ID?.message
-                                : ' '}
+                                : " "}
                             </Grid>
                           )}
-                          
                         </Grid>
                       </FormHelperText>
                     )}
@@ -363,12 +419,12 @@ export function CreateCentroAcopio() {
                 ))}
             </FormControl>
           </Grid>
-          
+
           <Grid item xs={12} sm={12}>
             <Button
-              type='submit'
-              variant='contained'
-              color='secondary'
+              type="submit"
+              variant="contained"
+              color="secondary"
               sx={{ m: 1 }}
             >
               Guardar
@@ -376,7 +432,6 @@ export function CreateCentroAcopio() {
           </Grid>
         </Grid>
       </form>
-     
     </>
   );
 }

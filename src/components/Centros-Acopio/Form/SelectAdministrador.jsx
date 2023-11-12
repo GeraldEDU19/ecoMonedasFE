@@ -4,10 +4,11 @@ import InputLabel from '@mui/material/InputLabel';
 import PropTypes from 'prop-types';
 
 SelectAdministrador.propTypes = {
-  data: PropTypes.array,
-  field: PropTypes.object,
-};
-export function SelectAdministrador({ field, data }) {
+      data: PropTypes.array,
+      field: PropTypes.object,
+      onChange: PropTypes.func,
+    };
+export function SelectAdministrador({ field, data, onChange}) {
   return (
     <>
       <>
@@ -18,6 +19,7 @@ export function SelectAdministrador({ field, data }) {
           label='Administrador'
           defaultValue=''
           value={field.value}
+          onChange={onChange}
         >
           {data &&
             data.map((administrador) => (

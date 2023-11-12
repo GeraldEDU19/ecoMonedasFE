@@ -10,6 +10,9 @@ class CentroAcopioService{
     getCentroById(CentroAcopioId){
       return axios.get(BASE_URL+"/"+CentroAcopioId)
     }
-   
+    createCentroAcopio(CentroAcopio){
+      console.log('entro aqui')
+      return axios.post(BASE_URL, CentroAcopio);
+  }
    }
    export default new CentroAcopioService()
