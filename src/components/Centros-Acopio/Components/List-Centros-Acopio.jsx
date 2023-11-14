@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Container, Grid, Card, CardContent, Typography, List, ListItem, ListItemIcon, ListItemText, Button } from '@mui/material';
+import { Container, Grid, Card, CardContent, Typography, List, ListItem, ListItemIcon, ListItemText, Button, Box } from '@mui/material';
 import { Link } from "react-router-dom";
 
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import AddIcon from '@mui/icons-material/Add';
 import CentroAcopioService from "../Services/Service-Centros-Acopio";
 
 export function ListCentroAcopio() {
@@ -24,20 +25,21 @@ export function ListCentroAcopio() {
       });
   }, []);
 
-  if (!loaded) return <p>Cargando...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-
-
-
-  return (
-    <Container>
+  const renderCentros = () => {
+    return (
       <Grid container spacing={3}>
         {data && data.map((item) => (
           <Grid item xs={12} sm={6} md={4} key={item.ID}>
-            <Card sx={{ 
-              height: "100%", display: "flex", flexDirection: "column", 
-              border: "1px solid lightgrey"
-              }}>
+            <Card sx={{
+              height: "100%", display: "flex", flexDirection: "column",
+              border: "1px solid lightgrey",
+              borderRadius: "8px",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+              transition: "transform 0.2s",
+              "&:hover": {
+                transform: "scale(1.02)",
+              }
+            }}>
               <CardContent>
                 <Typography variant="h6" component="div">
                   {item.Nombre}
@@ -60,19 +62,52 @@ export function ListCentroAcopio() {
                   ))}
                 </List>
               </CardContent>
-              <Button
-                variant="contained"
-                color="info" // Cambiar a color "info" para un tono de celeste pastel
-                sx={{ marginTop: "auto" }}
-                component={Link} to={`/centroAcopio/${item.ID}`} aria-label='Detalle' 
-                startIcon={<ErrorOutlineIcon />}
-              >
-                Información sobre el centro de Acopio
-              </Button>
+              <Box sx={{ display: "flex", justifyContent: "space-between", padding: "1rem" }}>
+                <Button
+                  variant="contained"
+                  color="info"
+                  sx={{ flex: 1, marginRight: "0.5rem", alignSelf: "flex-end" }}
+                  component={Link} to={`/centroAcopio/${item.ID}`} aria-label='Detalle'
+                  startIcon={<ErrorOutlineIcon />}
+                >
+                  Detalles
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  sx={{ flex: 1, alignSelf: "flex-end" }}
+                  component={Link} to={`/centroAcopio/actualizar/${item.ID}`}
+                  startIcon={<ErrorOutlineIcon />}
+                  disabled={!loaded} // Deshabilitar el botón si no hay datos cargados
+                >
+                  Actualizar
+                </Button>
+              </Box>
             </Card>
           </Grid>
         ))}
       </Grid>
+    );
+  };
+
+  if (!loaded) return <p>Cargando...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+
+  return (
+    <Container>
+      {/* Agrega el botón de creación en el medio con un espacio */}
+      <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "1rem", marginBottom: "1rem" }}>
+        <Button
+          variant="contained"
+          color="success"
+          component={Link} to={`/centroAcopio/crear/`} aria-label='Crear Centro de Acopio'
+          startIcon={<AddIcon />}
+        >
+          Crear Centro de Acopio
+        </Button>
+      </Box>
+      {renderCentros()}
     </Container>
   );
 }
+

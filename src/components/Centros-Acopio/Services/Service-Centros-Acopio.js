@@ -14,5 +14,11 @@ class CentroAcopioService{
       console.log('entro aqui')
       return axios.post(BASE_URL, CentroAcopio);
   }
+  updateCentroAcopio(Movie){
+    return axios.put(BASE_URL, Movie);
+}
+getCentroAcopioFormById(MovieId){
+  return axios.get(BASE_URL + '/getForm/' + MovieId);
+}
    }
    export default new CentroAcopioService()

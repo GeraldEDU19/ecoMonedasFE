@@ -19,6 +19,7 @@ import { CreateMaterial } from './components/Materiales/Form/CreateMaterial'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { CreateCentroAcopio } from './components/Centros-Acopio/Form/CreateCentroAcopio'
+import { UpdateCentroAcopio } from './components/Centros-Acopio/Form/UpdateCentroAcopio'
 const router= createBrowserRouter([
   {
     path:'/',
@@ -79,6 +80,11 @@ element: <DetailMateriales/>
   {
     path: 'centroAcopio/crear',
     element: <CreateCentroAcopio/>
+  },
+  {
+    path: 'centroAcopio/actualizar/:id',
+   
+    element: <UpdateCentroAcopio/>
   },
 ])
 
