@@ -45,7 +45,7 @@ export function DetailCentroAcopio() {
   if (error) return <p>Error: {error.message}</p>;
 
 
-  
+  console.log("data", data);
 
   return (
     <Container component='main' sx={{ mt: 8, mb: 2 }}>

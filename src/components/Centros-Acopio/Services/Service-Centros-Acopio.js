@@ -14,11 +14,11 @@ class CentroAcopioService{
       console.log('entro aqui')
       return axios.post(BASE_URL, CentroAcopio);
   }
-  updateCentroAcopio(Movie){
-    return axios.put(BASE_URL, Movie);
+  updateCentroAcopio(CentroAcopio){
+    return axios.put(BASE_URL, CentroAcopio);
 }
-getCentroAcopioFormById(MovieId){
-  return axios.get(BASE_URL + '/getForm/' + MovieId);
+getCentroAcopioFormById(CentroAcopioId){
+  return axios.get(BASE_URL + '/getForm/' + CentroAcopioId);
 }
    }
    export default new CentroAcopioService()

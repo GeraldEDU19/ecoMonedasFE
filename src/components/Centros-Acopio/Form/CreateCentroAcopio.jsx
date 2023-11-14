@@ -56,12 +56,16 @@ export function CreateCentroAcopio() {
     formState: { errors },
   } = useForm({
     defaultValues: {
+
       Nombre: "",
       DireccionCanton: "",
       DireccionDistrito: "",
       DireccionProvincia: "",
       AdministradorID: "",
       Materiales: [],
+     Telefono: "",
+     DireccionExacta: "",
+     HorarioAtencion: "",
     },
     // Asignación de validaciones
     resolver: yupResolver(CentroAcopioSchema),
@@ -283,10 +287,10 @@ export function CreateCentroAcopio() {
                     {...field}
                     id="DireccionExacta"
                     label="Direccion Exacta"
-                    error={Boolean(errors.DireccionDistrito)}
+                    error={Boolean(errors.DireccionExacta)}
                     helperText={
-                      errors.DireccionDistrito
-                        ? errors.DireccionDistrito.message
+                      errors.DireccionExacta
+                        ? errors.DireccionExacta.message
                         : " "
                     }
                   />
@@ -304,10 +308,10 @@ export function CreateCentroAcopio() {
                     {...field}
                     id="Telefono"
                     label="Número de teléfono"
-                    error={Boolean(errors.DireccionDistrito)}
+                    error={Boolean(errors.Telefono)}
                     helperText={
-                      errors.DireccionDistrito
-                        ? errors.DireccionDistrito.message
+                      errors.Telefono
+                        ? errors.Telefono.message
                         : " "
                     }
                   />
@@ -325,10 +329,10 @@ export function CreateCentroAcopio() {
                     {...field}
                     id="HorarioAtencion"
                     label="Horario de Atención"
-                    error={Boolean(errors.DireccionDistrito)}
+                    error={Boolean(errors.HorarioAtencion)}
                     helperText={
-                      errors.DireccionDistrito
-                        ? errors.DireccionDistrito.message
+                      errors.HorarioAtencion
+                        ? errors.HorarioAtencion.message
                         : " "
                     }
                   />

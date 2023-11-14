@@ -27,7 +27,7 @@ export function UpdateCentroAcopio() {
 
   useEffect(() => {
     if (id !== undefined && !isNaN(Number(id))) {
-      CentroAcopioService.getCentroAcopioFormById(Number(id))
+      CentroAcopioService.getCentroById(Number(id))
         .then((response) => {
           console.log(response);
           setValores(response.data.results);
@@ -81,8 +81,11 @@ export function UpdateCentroAcopio() {
       DireccionProvincia: "",
       AdministradorID: "",
       Materiales: [],
-      values,
+     Telefono: "",
+     DireccionExacta: "",
+     HorarioAtencion: "",
     },
+     values,
     // Asignación de validaciones
     resolver: yupResolver(CentroAcopioSchema),
   });
@@ -135,8 +138,10 @@ export function UpdateCentroAcopio() {
                 duration: 4000,
                 position: "top-center",
               });
+              
               // Redirección a la tabla o a la página de detalles, según tus necesidades
-              return navigate(`/centroAcopio/${response.data.ID}`);
+              // return navigate(`/centroAcopio/${response.data.ID}`);
+              location.reload();
             }
           })
           .catch((error) => {
@@ -296,10 +301,10 @@ return (
                   {...field}
                   id="DireccionExacta"
                   label="Direccion Exacta"
-                  error={Boolean(errors.DireccionDistrito)}
+                  error={Boolean(errors.DireccionExacta)}
                   helperText={
-                    errors.DireccionDistrito
-                      ? errors.DireccionDistrito.message
+                    errors.DireccionExacta
+                      ? errors.DireccionExacta.message
                       : " "
                   }
                 />
@@ -317,10 +322,10 @@ return (
                   {...field}
                   id="Telefono"
                   label="Número de teléfono"
-                  error={Boolean(errors.DireccionDistrito)}
+                  error={Boolean(errors.Telefono)}
                   helperText={
-                    errors.DireccionDistrito
-                      ? errors.DireccionDistrito.message
+                    errors.Telefono
+                      ? errors.Telefono.message
                       : " "
                   }
                 />
@@ -338,10 +343,10 @@ return (
                   {...field}
                   id="HorarioAtencion"
                   label="Horario de Atención"
-                  error={Boolean(errors.DireccionDistrito)}
+                  error={Boolean(errors.HoraAtencion)}
                   helperText={
-                    errors.DireccionDistrito
-                      ? errors.DireccionDistrito.message
+                    errors.HoraAtencion
+                      ? errors.HoraAtencion.message
                       : " "
                   }
                 />
