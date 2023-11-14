@@ -39,7 +39,8 @@ export function CreateMaterial() {
     Tipo: yup.string().required('El tipo es requerido'),
     Descripcion: yup.string().required('La descripción es requerida').min(10, 'Mínimo 10 caracteres'),
     Imagen: yup.mixed().test('required', 'La imagen es requerida', function (value) {
-      return value && value.length > 0;
+      // La siguiente condición verifica si el campo de imagen es un Blob o si es un archivo seleccionado
+      return value instanceof File || (value && value[0] instanceof File);
     }),
     UnidadMedida: yup.string().required('La unidad de medida es requerida'),
     Color: yup.string().required('El color es requerido'),
