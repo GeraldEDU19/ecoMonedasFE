@@ -14,7 +14,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
 import CentroAcopioService from "../../Centros-Acopio/Services/Service-Centros-Acopio";
 import { toast } from "react-hot-toast";
-import CentroAcopioAdminService from "../../Usuarios/Services/Service-Usuarios";
+import UsuarioService from "../../Usuarios/Services/Service-Usuarios";
 import { SelectAdministrador } from "../../Centros-Acopio/Form/SelectAdministrador";
 import { MaterialesForm } from "../../Centros-Acopio/Form/MaterialesForm";
 import MaterialService from "../../Materiales/Services/Service-Materiales";
@@ -38,11 +38,10 @@ export function CreateCentroAcopio() {
       .typeError("El Administrador es requerido")
       .required("El Administrador es requerido"),
     Telefono: yup
-      .string()
-      .typeError("El telefono es requerido")
+      .number()
+      .typeError("El telefono debe ser un numero")
       .required("El telefono es requerido"),
     HorarioAtencion: yup.string().required("El idioma es requerido"),
-    //Materiales array is required
     Materiales: yup
       .array()
       .required("Al menos un material es requerido")
@@ -113,19 +112,17 @@ export function CreateCentroAcopio() {
 
     try {
       if (CentroAcopioSchema.isValid()) {
-        //Crear pelicula
         CentroAcopioService.createCentroAcopio(DataForm)
           .then((response) => {
+            console.log("🚀 ~ file: CreateCentroAcopio.jsx:117 ~ .then ~ response:", response)
             console.log("Respuesta del servicio", response);
-            setError(response.error);
-            //Respuesta al usuario de creación
-            if (response.data.results != null) {
+            
+            if (response.data != null) {
               toast.success(response.data.results, {
                 duration: 4000,
                 position: "top-center",
               });
-              // Redireccion a la tabla
-              return navigate("/centroAcopio");
+              navigate("/centroAcopio");
             }
           })
           .catch((error) => {
@@ -137,7 +134,6 @@ export function CreateCentroAcopio() {
           });
       }
     } catch (e) {
-      //Capturar error
       console.log("ERROR AL CREAR EL CENTRO DE ACOPIO", e);
     }
   };
@@ -148,7 +144,7 @@ export function CreateCentroAcopio() {
   const [dataAdministrador, setDataAdministrador] = useState({});
   const [loadedAdministrador, setLoadedAdministrador] = useState(false);
   useEffect(() => {
-    CentroAcopioAdminService.getAdministradores()
+    UsuarioService.getAdministradoresSinCentro()
       .then((response) => {
         console.log(response);
         setDataAdministrador(response.data.results);

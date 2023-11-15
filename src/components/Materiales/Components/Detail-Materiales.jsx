@@ -14,11 +14,8 @@ import ServiceMateriales from "../Services/Service-Materiales";
     const routeParams = useParams()
     console.log(routeParams)
 
-      //Resultado de consumo del API, respuesta
   const [data,setData]=useState(null);
-  //Error del API
   const [error,setError]=useState('');
-  //Booleano para establecer sí se ha recibido respuesta
   const [loaded,setLoaded]=useState(false);  
 
   useEffect(()=>{
@@ -64,13 +61,20 @@ import ServiceMateriales from "../Services/Service-Materiales";
             </Typography>
           </Grid>
           <Grid item xs={12} md={5}>
-            <CardContent>
-              <img
-                src={`/assets/${data.Imagen}`}
-                alt=""
-                style={{ width: '90%', height: 'auto', maxWidth: '90%' }} // Ajusta el tamaño de la imagen
-              />
-            </CardContent>
+          <CardContent>
+    <img
+      src={ServiceMateriales.getImagenMaterialURL(data.Imagen)}
+      alt=""
+      style={{
+        width: '90%',
+        height: 'auto',
+        maxWidth: '90%',
+        border: `2px solid ${data.Color}`,
+        padding: '15px',
+        borderRadius: '15px'
+      }}
+    />
+  </CardContent>
           </Grid>
         </Grid>
       )}

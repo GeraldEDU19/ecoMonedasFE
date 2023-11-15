@@ -141,7 +141,8 @@ export function UpdateCentroAcopio() {
               
               // Redirección a la tabla o a la página de detalles, según tus necesidades
               // return navigate(`/centroAcopio/${response.data.ID}`);
-              location.reload();
+             /*  location.reload(); */
+              navigate('/centroAcopio/')
             }
           })
           .catch((error) => {

@@ -11,6 +11,7 @@ import { IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import EditIcon from '@mui/icons-material/Edit';
 
 export const ListMateriales = () => {
   const location = useLocation();
@@ -55,6 +56,17 @@ export const ListMateriales = () => {
      });
  }, []);
 
+ const getImageUrl = async (materialName) => {
+  try {
+    const response = await MaterialesService.getImagenMaterial(materialName);
+    const imageUrl = URL.createObjectURL(new Blob([response.data], { type: 'image/*' }));
+    return imageUrl;
+  } catch (error) {
+    console.error('Error al obtener la imagen:', error);
+    throw error;
+  }
+}
+
  if (!loaded) return <p>Cargando...</p>;
  if (error) return <p>Error: {error.message}</p>;
   // Rest of your component
@@ -81,7 +93,7 @@ export const ListMateriales = () => {
             />
             <CardContent>
               <img
-                src={`/assets/${item.Imagen}`}
+                src={MaterialesService.getImagenMaterialURL(item.Imagen)}
                 alt=""
                 width={"100%"}
                 height={"100%"}
@@ -91,7 +103,7 @@ export const ListMateriales = () => {
               disableSpacing
               sx={{
                 backgroundColor:  item.Color,
-                color: item.Color,
+                color: `${item.Color}50`,
               }}
             >
               <div>
@@ -103,6 +115,9 @@ export const ListMateriales = () => {
                 <AttachMoney /> <span><strong>{item.Precio}</strong></span>
               </Typography>
               </div>
+              <IconButton component={Link} to={`/material/${item.ID}`} aria-label='Detalle' sx={{ ml: 'auto' }}>
+                <EditIcon />
+              </IconButton >
               <IconButton component={Link} to={`/material/${item.ID}`} aria-label='Detalle' sx={{ ml: 'auto' }}>
                 <Info />
               </IconButton >

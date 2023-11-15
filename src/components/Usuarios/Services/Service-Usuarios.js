@@ -1,6 +1,6 @@
 import axios from "axios";
 const BASE_URL=import.meta.env.VITE_BASE_URL+"usuario"
-class CentroAcopioService{
+class UsuarioService{
     //Definición para Llamar al API y obtener el listado de películas
     //localhost:81/api/movie
     getUsuarios(){
@@ -9,7 +9,9 @@ class CentroAcopioService{
     getAdministradores(){
       return axios.get(BASE_URL+"/getAllAdministradores/"+1)
     }
-    //localhost:81/api/movie/2
+    getAdministradoresSinCentro(){
+      return axios.get(BASE_URL+"/getAllAdministradoresSinCentro/"+1)
+    }
    
    }
-   export default new CentroAcopioService()
+   export default new UsuarioService()
