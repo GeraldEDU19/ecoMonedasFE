@@ -12,6 +12,11 @@ class UsuarioService{
     getAdministradoresSinCentro(){
       return axios.get(BASE_URL+"/getAllAdministradoresSinCentro/"+1)
     }
-   
+    createUser(User){
+      return axios.post(BASE_URL, User);
+  }
+  loginUser(User){
+      return axios.post(BASE_URL+ '/login/', User);
+  }
    }
    export default new UsuarioService()

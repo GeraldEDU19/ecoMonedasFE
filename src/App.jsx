@@ -21,6 +21,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import { CreateCentroAcopio } from './components/Centros-Acopio/Form/CreateCentroAcopio'
 import { UpdateCentroAcopio } from './components/Centros-Acopio/Form/UpdateCentroAcopio'
 import CreateCanjeMaterialForm from './components/Canje-Materiales/Components/Create-Canje-Materiales'
+import { Unauthorized } from './components/Usuarios/components/Unauthorized'
+import { Logout } from './components/Usuarios/components/Logout'
+import { Signup } from './components/Usuarios/components/Signup'
+import UserProvider from './components/Usuarios/components/UserProvider'
 const router= createBrowserRouter([
   {
     path:'/',
@@ -91,15 +95,34 @@ element: <DetailMateriales/>
    
     element: <UpdateCentroAcopio/>
   },
+  {
+    path:'/noautorizado',
+    element: <Unauthorized/>
+  },
+  {
+    path:'/usuario/iniciosesion',
+    element: <Login />
+  },
+  {
+    path:'/usuario/cerrarsesion',
+    element: <Logout />
+  },
+  {
+    path:'/usuario/crear',
+    element: <Signup />
+  },
 ])
 
 export default function App(){
   return (
+    <UserProvider>
+
+  
     <Layout>
       <ToastContainer/>
         <RouterProvider router={router} />
 
     </Layout>
-   
+    </UserProvider>
   )
 }

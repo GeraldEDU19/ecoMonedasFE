@@ -10,13 +10,19 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Avatar,  MenuList } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import MovieIcon from '@mui/icons-material/Movie';
 import SettingsIcon from '@mui/icons-material/Settings';
 import RecyclingIcon from '@mui/icons-material/Recycling';
+import { UserContext } from '../../context/UserContext';
+import { useEffect } from 'react';
 
 function Header() {
-  
+  const {user,decodeToken, autorize}=useContext(UserContext)
+  const [userData,setUserData]=useState(decodeToken())
+  useEffect(()=>{
+    setUserData(decodeToken())
+  },[user]) 
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -192,28 +198,28 @@ function Header() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-          
+           {!userData &&(
               <MenuList>
-                <MenuItem component='a' href='/user/login'>
+                <MenuItem component='a' href='/usuario/iniciosesion'>
                   <Typography textAlign="center">Login</Typography>
                 </MenuItem>
-                <MenuItem component='a' href='/user/create'>
+                <MenuItem component='a' href='/usuario/crear'>
                   <Typography textAlign="center">Registrarse</Typography>
                 </MenuItem>
               </MenuList>
-               
-
+                 )} 
+{userData &&( 
                 <MenuList>
                 <MenuItem>
                   <Typography variant='subtitle1' gutterBottom>
-                    Email usuario                    
+                  {userData?.email}                       
                   </Typography>
                 </MenuItem>
-                <MenuItem color='secondary' component='a' href='/user/logout'>
+                <MenuItem color='secondary' component='a' href='/usuario/cerrarsesion'>
                   <Typography textAlign='center'>Logout</Typography>
                 </MenuItem>
               </MenuList>
-            
+             )}
             </Menu>
           </Box>
 {/* Menu Usuarios */}

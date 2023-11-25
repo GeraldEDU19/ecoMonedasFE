@@ -21,6 +21,7 @@
     "@mui/x-data-grid": "^6.17.0",
     "@remix-run/router": "^1.11.0",
     "axios": "^1.5.0",
+    "jwt-decode": "^4.0.0",
     "nodemon": "^3.0.1",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
