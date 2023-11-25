@@ -20,6 +20,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { CreateCentroAcopio } from './components/Centros-Acopio/Form/CreateCentroAcopio'
 import { UpdateCentroAcopio } from './components/Centros-Acopio/Form/UpdateCentroAcopio'
+import CreateCanjeMaterialForm from './components/Canje-Materiales/Components/Create-Canje-Materiales'
 const router= createBrowserRouter([
   {
     path:'/',
@@ -48,6 +49,10 @@ const router= createBrowserRouter([
   {
     path: '/canjesMaterialesByAdministrador',
     element: <CanjesMaterialesByAdministradorMain/>
+  },
+  {
+    path: '/facturar',
+    element: <CreateCanjeMaterialForm/>
   },
   {
     path: '/centroAcopio',
