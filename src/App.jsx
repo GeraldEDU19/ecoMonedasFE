@@ -24,6 +24,7 @@ import CreateCanjeMaterialForm from './components/Canje-Materiales/Components/Cr
 import { Unauthorized } from './components/Usuarios/components/Unauthorized'
 import { Logout } from './components/Usuarios/components/Logout'
 import { Signup } from './components/Usuarios/components/Signup'
+import { Logiin } from './components/Usuarios/components/Logiin'
 import UserProvider from './components/Usuarios/components/UserProvider'
 const router= createBrowserRouter([
   {
@@ -79,8 +80,7 @@ element: <DetailMateriales/>
     element: <DetailCentroAcopio/> 
       },
   {
-    path: '/user/login',
-    element : <Login />
+   
   },
   {
     path: 'material/crear',
@@ -101,7 +101,7 @@ element: <DetailMateriales/>
   },
   {
     path:'/usuario/iniciosesion',
-    element: <Login />
+    element: <Logiin/>
   },
   {
     path:'/usuario/cerrarsesion',

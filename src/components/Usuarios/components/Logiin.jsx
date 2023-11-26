@@ -11,11 +11,11 @@ import * as yup from 'yup'
 // eslint-disable-next-line no-unused-vars
 import { useNavigate } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
-import { UserContext } from '../../context/UserContext'
+import { UserContext } from "../../../context/UserContext"
 import toast from 'react-hot-toast'
 import UserService from '../Services/Service-Usuarios'
 
-export function Login () {
+export function Logiin () {
   const navigate = useNavigate()
   const {saveUser} =useContext(UserContext)
   // Esquema de validación
