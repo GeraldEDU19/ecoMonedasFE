@@ -9,6 +9,9 @@ class UsuarioService{
     getAdministradores(){
       return axios.get(BASE_URL+"/getAllAdministradores/"+1)
     }
+    getClientes(){
+      return axios.get(BASE_URL+"/getAllClientes/"+1)
+    }
     getAdministradoresSinCentro(){
       return axios.get(BASE_URL+"/getAllAdministradoresSinCentro/"+1)
     }

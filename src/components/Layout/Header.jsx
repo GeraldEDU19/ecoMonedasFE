@@ -171,6 +171,9 @@ function Header() {
                 <MenuItem component='a' href='/centroAcopio/crear/'>
                   <Typography textAlign="center">Crear Centro de acopio</Typography>
                 </MenuItem>
+                <MenuItem component='a' href='/facturar/'>
+                  <Typography textAlign="center">Facturar</Typography>
+                </MenuItem>
             </Menu>
           </Box>
 {/* Menu de Matenimientos */}

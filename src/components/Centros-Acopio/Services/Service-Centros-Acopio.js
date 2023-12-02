@@ -20,6 +20,9 @@ class CentroAcopioService{
 getCentroAcopioFormById(CentroAcopioId){
   return axios.get(BASE_URL + '/getForm/' + CentroAcopioId);
 }
+getCentroDeAcopioPorAdministrador(administradorID){
+  return axios.get(BASE_URL+"/getCentroAcopioByAdministradorID/"+administradorID)
+}
 
    }
    export default new CentroAcopioService()

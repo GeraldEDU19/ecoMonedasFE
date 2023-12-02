@@ -25,7 +25,8 @@ const columns = [
 export function ListCanjeMaterialesByAdministrador() {
   const navigate = useNavigate();
   const handleRowClick = (params) => {
-    const canjeMaterialID = params.row.id; // Obtener el ID del canje de materiales seleccionado
+    console.log("🚀 ~ file: List-Canje-Materiales-By-Administrador.jsx:28 ~ handleRowClick ~ params:", params)
+    const canjeMaterialID = params.row.ID; // Obtener el ID del canje de materiales seleccionado
     navigate(`/CanjeDeMateriales/${canjeMaterialID}`);
   };
   //Resultado de consumo del API, respuesta
@@ -85,11 +86,14 @@ export function ListCanjeMaterialesByAdministrador() {
       .then((response) => {
         const formattedData = response.data.results.map((canje, index) => ({
           id: canje.ID + "-" + index,
+          ID: canje.ID,
           FechaCanje: canje.FechaCanje,
           Cliente: canje.Cliente.PrimerNombre + " " + canje.Cliente.SegundoNombre + " " + canje.Cliente.PrimerApellido + " " + canje.Cliente.SegundoApellido,
           Administrador: canje.CentroDeAcopio.Administrador.PrimerNombre + " " + canje.CentroDeAcopio.Administrador.SegundoNombre + " " + canje.CentroDeAcopio.Administrador.PrimerApellido + " " + canje.CentroDeAcopio.Administrador.SegundoApellido,
           TotalEcoMonedas: canje.TotalEcoMonedas
         }));
+        console.log("🚀 ~ file: List-Canje-Materiales-By-Administrador.jsx:95 ~ formattedData ~ response.data.results:", response.data.results)
+        console.log("🚀 ~ file: List-Canje-Materiales-By-Administrador.jsx:95 ~ formattedData ~ formattedData:", formattedData)
         
         setDataCanjeMateriales(formattedData);
       })

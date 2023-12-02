@@ -11,6 +11,10 @@ import axios from'axios';
   getCanjeMaterialById(CanjeMaterialId){
     return axios.get(BASE_URL+"/"+CanjeMaterialId)
   }
+  createCanjeMateriales(canjeMateriales){
+    console.log('entro aqui')
+    return axios.post(BASE_URL, canjeMateriales);
+}
   getCanjeMaterialByClienteID(ClienteID){
     console.log(BASE_URL+"/getByClienteID/"+ClienteID)
     return axios.get(BASE_URL+"/getByClienteID/"+ClienteID)
