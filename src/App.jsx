@@ -7,7 +7,7 @@ import { ListMovies } from './components/Movie/ListMovies'
 import Materiales from './components/Materiales/Materiales'
 import CentrosAcopio from './components/Centros-Acopio/Centros-Acopio'
 import { DetailMovie } from './components/Movie/DetailMovie'
-import { Create, Login } from '@mui/icons-material'
+import { Create} from '@mui/icons-material'
 import CanjesMaterialesMain from './components/Canje-Materiales/Canje-Materiales'
 import CanjesMaterialesByClienteMain from './components/Canje-Materiales/Canje-Materiales-By-Cliente'
 import CanjesMaterialesByAdministradorMain from './components/Canje-Materiales/Canje-Materiales-By-Administrador'
@@ -24,7 +24,7 @@ import CreateCanjeMaterialForm from './components/Canje-Materiales/Components/Cr
 import { Unauthorized } from './components/Usuarios/components/Unauthorized'
 import { Logout } from './components/Usuarios/components/Logout'
 import { Signup } from './components/Usuarios/components/Signup'
-import { Logiin } from './components/Usuarios/components/Logiin'
+import { Login } from './components/Usuarios/components/Login'
 import UserProvider from './components/Usuarios/components/UserProvider'
 const router= createBrowserRouter([
   {
@@ -101,7 +101,7 @@ element: <DetailMateriales/>
   },
   {
     path:'/usuario/iniciosesion',
-    element: <Logiin/>
+    element: <Login/>
   },
   {
     path:'/usuario/cerrarsesion',

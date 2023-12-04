@@ -15,23 +15,23 @@ import { UserContext } from "../../../context/UserContext"
 import toast from 'react-hot-toast'
 import UserService from '../Services/Service-Usuarios'
 
-export function Logiin () {
+export function Login () {
   const navigate = useNavigate()
   const {saveUser} =useContext(UserContext)
   // Esquema de validación
   const loginSchema = yup.object({
-    email: yup.string()
-      .required('El email es requerido')
-      .email('Formato email'),
-    password: yup.string()
-      .required('El password es requerido')
+    CorreoElectronico: yup.string()
+      .required('El CorreoElectronico es requerido')
+      .email('Formato Correo Electronico'),
+    Contrasenna: yup.string()
+      .required('la Contraseña es requerida')
   })
   const { control, handleSubmit, formState: { errors } } =
   useForm({
     // Valores iniciales
     defaultValues: {
-      email: '',
-      password: ''
+      CorreoElectronico: '',
+      Contrasenna: ''
     },
     // Asignación de validaciones
     resolver: yupResolver(loginSchema)
@@ -100,15 +100,15 @@ export function Logiin () {
             {/* ['filled','outlined','standard']. */}
             <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
               <Controller
-                name='email'
+                name='CorreoElectronico'
                 control={control}
                 render={({ field }) => (
                   <TextField
                     {...field}
-                    id='email'
-                    label='Email'
-                    error={Boolean(errors.email)}
-                    helperText={errors.email ? errors.email.message : ' '}
+                    id='CorreoElectronico'
+                    label='Correo Electronico'
+                    error={Boolean(errors.CorreoElectronico)}
+                    helperText={errors.CorreoElectronico ? errors.CorreoElectronico.message : ' '}
                   />
                 )}
               />
@@ -117,16 +117,16 @@ export function Logiin () {
           <Grid item xs={12} sm={4}>
             <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
               <Controller
-                name='password'
+                name='Contrasenna'
                 control={control}
                 render={({ field }) => (
                   <TextField
                     {...field}
-                    id='password'
-                    label='Password'
-                    type='password'
-                    error={Boolean(errors.password)}
-                    helperText={errors.password ? errors.password.message : ' '}
+                    id='Contrasenna'
+                    label='Contrasenna'
+                    type='Contrasenna'
+                    error={Boolean(errors.Contrasenna)}
+                    helperText={errors.Contrasenna ? errors.Contrasenna.message : ' '}
                   />
                 )}
               />
@@ -140,3 +140,6 @@ export function Logiin () {
     </>
   )
 }
+
+
+

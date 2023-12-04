@@ -215,7 +215,7 @@ function Header() {
                 <MenuList>
                 <MenuItem>
                   <Typography variant='subtitle1' gutterBottom>
-                  {userData?.email}                       
+                  {userData?.CorreoElectronico}                       
                   </Typography>
                 </MenuItem>
                 <MenuItem color='secondary' component='a' href='/usuario/cerrarsesion'>

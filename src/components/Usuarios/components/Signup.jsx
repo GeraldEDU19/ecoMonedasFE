@@ -24,7 +24,7 @@ export function Signup () {
     DireccionCanton: yup.string(),
     DireccionDistrito: yup.string(),
     Telefono: yup.string(),
-    Contraseña: yup.string().required('La Contraseña es obligatoria'),
+    Contrasenna: yup.string().required('La Contraseña es obligatoria'),
   
   })
   const { control, handleSubmit, setValue, formState: { errors } } =
@@ -40,7 +40,7 @@ export function Signup () {
     DireccionCanton: '',
     DireccionDistrito: '',
     Telefono: '',
-    Contraseña: '',
+    Contrasenna: '',
     RolId: 0,
     },
     // Asignación de validaciones
@@ -249,16 +249,16 @@ export function Signup () {
           <Grid item xs={12} sm={6}>
             <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
               <Controller
-                name='Contraseña'
+                name='Contrasenna'
                 control={control}
                 render={({ field }) => (
                   <TextField
                     {...field}
-                    id='Contraseña'
-                    label='Contraseña'
-                    type='Contraseña'
-                    error={Boolean(errors.Contraseña)}
-                    helperText={errors.Contraseña ? errors.Contraseña.message : ' '}
+                    id='Contrasenna'
+                    label='Contrasenna'
+                    type='Contrasenna'
+                    error={Boolean(errors.Contrasenna)}
+                    helperText={errors.Contrasenna ? errors.Contrasenna.message : ' '}
                   />
                 )}
               />
