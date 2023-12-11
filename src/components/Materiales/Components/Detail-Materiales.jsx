@@ -63,7 +63,7 @@ import ServiceMateriales from "../Services/Service-Materiales";
           <Grid item xs={12} md={5}>
           <CardContent>
     <img
-      src={ServiceMateriales.getImagenMaterialURL(data.Imagen)}
+      src={ServiceMateriales.getImagenMaterialURL(data.ID)}
       alt=""
       style={{
         width: '90%',

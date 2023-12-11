@@ -29,9 +29,10 @@ export default function UserProvider (props) {
   //allowedRoles=['Administrador','Usuario']
   const autorize = ({ allowedRoles }) => {
     const userData = decodeToken()
+    console.log("🚀 ~ file: UserProvider.jsx:32 ~ autorize ~ userData:", userData)
     if (userData && allowedRoles) {
-      console.log(userData && userData.rol && allowedRoles.includes(userData.rol.Nombre))
-      return userData && userData.rol && allowedRoles.includes(userData.rol.Nombre)
+      console.log(allowedRoles.includes(userData.Rol))
+      return allowedRoles.includes(userData.Rol)
     }
     return false
   }

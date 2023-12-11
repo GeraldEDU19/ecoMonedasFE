@@ -48,7 +48,7 @@ export function Login () {
         .then(response => {
           console.log(response)
           if(response.data.results !=null && response.data.results !='undefined' && 
-          response.data.results!='Usuario no valido'){
+          response.data.results!='Usuario no válido'){
             //Usuario valido o identificado
             //Guardar el token
             saveUser(response.data.results)
@@ -58,14 +58,14 @@ export function Login () {
             })
             return navigate('/')    
           }else{
+            console.log("Debería entrar aquí")
             //Usuario no valido
-            if(response.data.results =='undefined' && 
-            response.data.results=='Usuario no valido'){
+            
                 toast.error('Usuario NO válido',{
                   duration:4000,
-                  position:'top-right'
+                  position:'top-center'
                 })
-            }
+            
           }
            
         })
@@ -89,54 +89,59 @@ export function Login () {
   return (
     <>
       <Toaster />
-      <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
-        <Grid container spacing={1}>
-          <Grid item xs={12} sm={12}>
-            <Typography variant='h5' gutterBottom>
-              Login
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            {/* ['filled','outlined','standard']. */}
-            <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
-              <Controller
-                name='CorreoElectronico'
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    id='CorreoElectronico'
-                    label='Correo Electronico'
-                    error={Boolean(errors.CorreoElectronico)}
-                    helperText={errors.CorreoElectronico ? errors.CorreoElectronico.message : ' '}
-                  />
-                )}
-              />
-            </FormControl>
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
-              <Controller
-                name='Contrasenna'
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    id='Contrasenna'
-                    label='Contrasenna'
-                    type='Contrasenna'
-                    error={Boolean(errors.Contrasenna)}
-                    helperText={errors.Contrasenna ? errors.Contrasenna.message : ' '}
-                  />
-                )}
-              />
-            </FormControl>
-          </Grid>
-          <Grid item xs={12} sm={12}>
-            <Button type='submit' variant='contained' color='secondary' sx={{ m: 1 }}>Login</Button>
-          </Grid>
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
+      <Grid container spacing={2} direction="column" alignItems="center">
+        <Grid item xs={12}>
+          <Typography variant="h5" gutterBottom>
+            Iniciar Sesión
+          </Typography>
         </Grid>
-      </form>
+        <Grid item xs={12}>
+          <FormControl fullWidth>
+            <Controller
+              name="CorreoElectronico"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  id="CorreoElectronico"
+                  label="Correo Electrónico"
+                  variant="outlined"
+                  error={Boolean(errors.CorreoElectronico)}
+                  helperText={errors.CorreoElectronico ? errors.CorreoElectronico.message : ' '}
+                  margin="dense"
+                />
+              )}
+            />
+          </FormControl>
+        </Grid>
+        <Grid item xs={12}>
+          <FormControl fullWidth>
+            <Controller
+              name="Contrasenna"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  id="Contrasenna"
+                  label="Contraseña"
+                  type="password"
+                  variant="outlined"
+                  error={Boolean(errors.Contrasenna)}
+                  helperText={errors.Contrasenna ? errors.Contrasenna.message : ' '}
+                  margin="dense"
+                />
+              )}
+            />
+          </FormControl>
+        </Grid>
+        <Grid item xs={12}>
+          <Button type="submit" variant="contained" color="primary" fullWidth>
+            Ingresar
+          </Button>
+        </Grid>
+      </Grid>
+    </form>
     </>
   )
 }

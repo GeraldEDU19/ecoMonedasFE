@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Container, Grid, Card, CardContent, Typography, List, ListItem, ListItemIcon, ListItemText, Button, Box } from '@mui/material';
 import { Link } from "react-router-dom";
 
@@ -6,8 +6,16 @@ import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import AddIcon from '@mui/icons-material/Add';
 import CentroAcopioService from "../Services/Service-Centros-Acopio";
+import { UserContext } from "../../../context/UserContext";
 
 export function ListCentroAcopio() {
+
+  const { user, decodeToken, autorize } = useContext(UserContext)
+    const [userData, setUserData] = useState(decodeToken())
+    useEffect(() => {
+      setUserData(decodeToken())
+    }, [user])
+
   const [data, setData] = useState(null);
   const [error, setError] = useState("");
   const [loaded, setLoaded] = useState(false);
@@ -72,6 +80,7 @@ export function ListCentroAcopio() {
                 >
                   Detalles
                 </Button>
+                {user && autorize({ allowedRoles: ["Administrador"] }) && (
                 <Button
                   variant="contained"
                   color="primary"
@@ -82,6 +91,7 @@ export function ListCentroAcopio() {
                 >
                   Actualizar
                 </Button>
+                )}
               </Box>
             </Card>
           </Grid>
@@ -97,6 +107,7 @@ export function ListCentroAcopio() {
     <Container>
       {/* Agrega el botón de creación en el medio con un espacio */}
       <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "1rem", marginBottom: "1rem" }}>
+      {user && autorize({ allowedRoles: ["Administrador"] }) && (
         <Button
           variant="contained"
           color="success"
@@ -105,6 +116,7 @@ export function ListCentroAcopio() {
         >
           Crear Centro de Acopio
         </Button>
+        )}
       </Box>
       {renderCentros()}
     </Container>

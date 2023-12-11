@@ -17,9 +17,13 @@ class UsuarioService{
     }
     createUser(User){
       return axios.post(BASE_URL, User);
-  }
-  loginUser(User){
+    }
+    loginUser(User){
       return axios.post(BASE_URL+ '/login/', User);
-  }
+    }
+    changePassword(user) {
+      console.log("🚀 ~ file: Service-Usuarios.js:25 ~ UsuarioService ~ changePassword ~ user:", user)
+      return axios.post(BASE_URL+"/changePassword/", user);
+    }
    }
    export default new UsuarioService()

@@ -13,6 +13,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 import {DataGrid} from '@mui/x-data-grid';
+import { UserContext } from "../../../context/UserContext";
 
 const columns = [
   // Columns representing the fields from the CanjesMateriales table
@@ -23,6 +24,12 @@ const columns = [
   { field: 'TotalEcoMonedas', headerName: 'Total EcoMonedas', width: 150 },
 ];
 export function ListCanjeMaterialesByAdministrador() {
+  const { user, decodeToken, autorize } = React.useContext(UserContext)
+  const [userData, setUserData] = useState(decodeToken())
+  useEffect(() => {
+    setUserData(decodeToken())
+  }, [user])
+
   const navigate = useNavigate();
   const handleRowClick = (params) => {
     console.log("🚀 ~ file: List-Canje-Materiales-By-Administrador.jsx:28 ~ handleRowClick ~ params:", params)
@@ -42,40 +49,16 @@ export function ListCanjeMaterialesByAdministrador() {
   //Booleano para establecer sí se ha recibido respuesta
   const [loadedCanjeMateriales, setLoadedCanjeMateriales] = useState(false);
 
+  const [AdministradorID, setAdministradorID] = React.useState('');
 
   useEffect(() => {
-    setLoadedAdministradores(true);
-    UsuariosService.getAdministradores()
-      .then((response) => {
-        setDataAdministradores(response.data.results);
-        console.log(response.data);
-        setErrorAdministradores(response.error);
-        setLoadedAdministradores(true);
-      })
-      .catch((error) => {
-        console.log(error);
-        setErrorAdministradores(error);
-        throw new Error("Respuesta no válida del servidor");
-      });
+    
+    loadCanjeMateriales(userData.ID)
+    setLoadedAdministradores(true)
+    console.log("🚀 ~ file: List-Canje-Materiales-By-Administrador.jsx:57 ~ useEffect ~ user:", userData)
   }, []);
 
 
-
-
-  const [AdministradorID, setAdministradorID] = React.useState('');
-
-
- 
-
-  const handleChange = (event) => {
-    const selectedAdminID = event.target.value;
-    setAdministradorID(selectedAdminID);
-    if (selectedAdminID) {
-      loadCanjeMateriales(selectedAdminID);
-    } else {
-      setDataCanjeMateriales(null); // Reiniciar datos si el ID de administrador es nulo
-    }
-  };
 
   
   
@@ -104,27 +87,11 @@ export function ListCanjeMaterialesByAdministrador() {
       });    
 }
 
-  if (!loadedAdministradores) return <p>Cargando...</p>;
-  if (errorAdministradores) return <p>Error: {errorAdministradores.message}</p>;
+
+ 
   return (
     
     <Box sx={{ minWidth: 120 }}>
-    <FormControl fullWidth>
-      <InputLabel id="demo-simple-select-label">Administrador</InputLabel>
-      <Select
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        value={AdministradorID}
-        label="Administrador"
-        onChange={handleChange}
-      >
-        {dataAdministradores && dataAdministradores.map((item) => (
-            <MenuItem key={item.ID} value={item.ID}>{item.PrimerNombre + " " + item.SegundoNombre + " " + item.PrimerApellido + " " + item.SegundoApellido}</MenuItem>
-        ))}
-    
-      </Select>
-    </FormControl>
-
 
       <div style={{ height: 400, width: '100%' }}>
       <DataGrid

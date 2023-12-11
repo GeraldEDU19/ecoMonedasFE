@@ -8,7 +8,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { Avatar,  MenuList } from '@mui/material';
+import { Avatar, MenuList } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import { useContext, useState } from 'react';
 import MovieIcon from '@mui/icons-material/Movie';
@@ -18,11 +18,11 @@ import { UserContext } from '../../context/UserContext';
 import { useEffect } from 'react';
 
 function Header() {
-  const {user,decodeToken, autorize}=useContext(UserContext)
-  const [userData,setUserData]=useState(decodeToken())
-  useEffect(()=>{
+  const { user, decodeToken, autorize } = useContext(UserContext)
+  const [userData, setUserData] = useState(decodeToken())
+  useEffect(() => {
     setUserData(decodeToken())
-  },[user]) 
+  }, [user])
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -47,7 +47,7 @@ function Header() {
     }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-        <RecyclingIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <RecyclingIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -65,7 +65,7 @@ function Header() {
           >
             EcoRecicla
           </Typography>
-         
+
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -76,7 +76,7 @@ function Header() {
               color="inherit"
             >
               <MenuIcon />
-            </IconButton>           
+            </IconButton>
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
@@ -95,19 +95,17 @@ function Header() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-                <MenuItem component='a' href='/movie/'>
-                  <Typography textAlign="center"></Typography>
-                </MenuItem>
-                <MenuItem component='a' href='/materiales/'>
-                  <Typography textAlign="center"></Typography>
-                </MenuItem>
-                <MenuItem component='a' href='/centroAcopio/'>
-                  <Typography textAlign="center"></Typography>
-                </MenuItem>
+ 
+              <MenuItem component='a' href='/materiales/'>
+                <Typography textAlign="center"></Typography>
+              </MenuItem>
+              <MenuItem component='a' href='/centroAcopio/'>
+                <Typography textAlign="center"></Typography>
+              </MenuItem>
             </Menu>
           </Box>
           <MovieIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          
+
           <Typography
             variant="p"
             noWrap
@@ -126,15 +124,15 @@ function Header() {
           >
             EcoRecicla
           </Typography>
-          
-          
-{/* Menu de Matenimientos */}
-<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+
+
+          {/* Menu de Matenimientos */}
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <Tooltip title="Mantenimientos">
               <IconButton onClick={handleOpenNavMenu} sx={{ p: 0 }}>
-              <Avatar  variant="rounded">
-                <SettingsIcon />
-              </Avatar>                
+                <Avatar variant="rounded">
+                  <SettingsIcon />
+                </Avatar>
               </IconButton>
             </Tooltip>
             <Menu
@@ -153,36 +151,61 @@ function Header() {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
             >
-                <MenuItem component='a' href='/materiales/'>
-                  <Typography textAlign="center">Lista Materiales</Typography>
-                </MenuItem>
-                <MenuItem component='a' href='/centroAcopio/'>
-                  <Typography textAlign="center">Lista Centro de acopio</Typography>
-                </MenuItem>
-                <MenuItem component='a' href='/canjesMaterialesByCliente/'>
-                  <Typography textAlign="center">Lista Canjes Materiales Por Cliente</Typography>
-                </MenuItem>
-                <MenuItem component='a' href='/canjesMaterialesByAdministrador/'>
-                  <Typography textAlign="center">Lista Canjes Materiales Por Administrador</Typography>
-                </MenuItem>
+              {user && autorize({ allowedRoles: ["Administrador"] }) && (
+              <MenuItem component='a' href='/usuario/crearAdministrador'>
+                    <Typography textAlign="center">Crear Administrador</Typography>
+                  </MenuItem>
+                  )}
+                {user && autorize({ allowedRoles: ["Administrador"] }) && (
+              <MenuItem component='a' href='/usuario/lista'>
+                    <Typography textAlign="center">Lista Usuarios</Typography>
+                  </MenuItem>
+                  )}
+              <MenuItem component='a' href='/materiales/'>
+                <Typography textAlign="center">Lista Materiales</Typography>
+              </MenuItem>
+              <MenuItem component='a' href='/centroAcopio/'>
+                <Typography textAlign="center">Lista Centro de acopio</Typography>
+              </MenuItem>
+
+              {user && autorize({ allowedRoles: ["Cliente"] }) && (
+              <MenuItem component='a' href='/canjesMaterialesByCliente/'>
+                <Typography textAlign="center">Historial de Canjes</Typography>
+              </MenuItem>
+              )}
+    
+              {user && autorize({ allowedRoles: ["Administrador"] }) && (
+              <MenuItem component='a' href='/canjesMaterialesByAdministrador/'>
+                <Typography textAlign="center">Historial de Canjes Facturados</Typography>
+              </MenuItem>
+              )}
+              {user && autorize({ allowedRoles: ["Administrador"] }) && (
+
+
                 <MenuItem component='a' href='/material/crear/'>
                   <Typography textAlign="center">Crear Material</Typography>
                 </MenuItem>
+
+              )}
+              {user && autorize({ allowedRoles: ["Administrador"] }) && (
                 <MenuItem component='a' href='/centroAcopio/crear/'>
                   <Typography textAlign="center">Crear Centro de acopio</Typography>
                 </MenuItem>
+              )}
+              {user && autorize({ allowedRoles: ["Administrador"] }) && (
                 <MenuItem component='a' href='/facturar/'>
                   <Typography textAlign="center">Facturar</Typography>
                 </MenuItem>
+              )}
             </Menu>
           </Box>
-{/* Menu de Matenimientos */}
+          {/* Menu de Matenimientos */}
 
- {/* Menu Usuarios */}
+          {/* Menu Usuarios */}
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Usuario">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <PersonIcon style={{ fill:'white'}} />
+                <PersonIcon style={{ fill: 'white' }} />
               </IconButton>
             </Tooltip>
             <Menu
@@ -201,31 +224,31 @@ function Header() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-           {!userData &&(
-              <MenuList>
-                <MenuItem component='a' href='/usuario/iniciosesion'>
-                  <Typography textAlign="center">Login</Typography>
-                </MenuItem>
-                <MenuItem component='a' href='/usuario/crear'>
-                  <Typography textAlign="center">Registrarse</Typography>
-                </MenuItem>
-              </MenuList>
-                 )} 
-{userData &&( 
+              {!userData && (
                 <MenuList>
-                <MenuItem>
-                  <Typography variant='subtitle1' gutterBottom>
-                  {userData?.CorreoElectronico}                       
-                  </Typography>
-                </MenuItem>
-                <MenuItem color='secondary' component='a' href='/usuario/cerrarsesion'>
-                  <Typography textAlign='center'>Logout</Typography>
-                </MenuItem>
-              </MenuList>
-             )}
+                  <MenuItem component='a' href='/usuario/iniciosesion'>
+                    <Typography textAlign="center">Login</Typography>
+                  </MenuItem>
+                  <MenuItem component='a' href='/usuario/crear'>
+                    <Typography textAlign="center">Registrarse</Typography>
+                  </MenuItem>
+                </MenuList>
+              )}
+              {userData && (
+                <MenuList>
+                  <MenuItem component='a' href='/usuario/informacion'>
+                    <Typography variant='subtitle1' gutterBottom>
+                      {userData?.CorreoElectronico}
+                    </Typography>
+                  </MenuItem>
+                  <MenuItem color='secondary' component='a' href='/usuario/cerrarsesion'>
+                    <Typography textAlign='center'>Logout</Typography>
+                  </MenuItem>
+                </MenuList>
+              )}
             </Menu>
           </Box>
-{/* Menu Usuarios */}
+          {/* Menu Usuarios */}
 
         </Toolbar>
       </Container>

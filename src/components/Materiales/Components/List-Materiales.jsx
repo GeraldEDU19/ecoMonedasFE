@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import MaterialesService from "../Services/Service-Materiales";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -12,11 +12,22 @@ import { Link } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import EditIcon from '@mui/icons-material/Edit';
+import { UserContext } from "../../../context/UserContext";
+
 
 export const ListMateriales = () => {
   const location = useLocation();
+  const { user, decodeToken, autorize } = useContext(UserContext)
+    const [userData, setUserData] = useState(decodeToken())
+    useEffect(() => {
+      setUserData(decodeToken())
+    }, [user])
 
   useEffect(() => {
+
+    
+
+
     const queryParams = new URLSearchParams(location.search);
     const created = queryParams.get('created');
 
@@ -93,7 +104,7 @@ export const ListMateriales = () => {
             />
             <CardContent>
               <img
-                src={MaterialesService.getImagenMaterialURL(item.Imagen)}
+                src={MaterialesService.getImagenMaterialURL(item.ID)}
                 alt=""
                 width={"100%"}
                 height={"100%"}
@@ -115,9 +126,11 @@ export const ListMateriales = () => {
                 <AttachMoney /> <span><strong>{item.Precio}</strong></span>
               </Typography>
               </div>
+              {user && autorize({ allowedRoles: ["Administrador"] }) && (
               <IconButton component={Link} to={`/material/${item.ID}`} aria-label='Detalle' sx={{ ml: 'auto' }}>
                 <EditIcon />
               </IconButton >
+              )}
               <IconButton component={Link} to={`/material/${item.ID}`} aria-label='Detalle' sx={{ ml: 'auto' }}>
                 <Info />
               </IconButton >

@@ -1,20 +1,20 @@
-import { useEffect, useState } from 'react'
-import FormControl from '@mui/material/FormControl'
-import Grid from '@mui/material/Grid'
-import Typography from '@mui/material/Typography'
-import { useForm, Controller } from 'react-hook-form'
-import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
-import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from 'yup'
-import { useNavigate } from 'react-router-dom'
-import toast from 'react-hot-toast'
-import UserService from '../Services/Service-Usuarios'
+import { useEffect, useState } from 'react';
+import FormControl from '@mui/material/FormControl';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import { useForm, Controller } from 'react-hook-form';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import UserService from '../Services/Service-Usuarios';
 
-export function Signup () {
-  const navigate = useNavigate()
-  // Esquema de validación
-  const loginSchema = yup.object({
+export function CreateAdministrator() {
+  const navigate = useNavigate();
+
+  const administratorSchema = yup.object({
     PrimerNombre: yup.string().required('El Primer Nombre es obligatorio'),
     SegundoNombre: yup.string().required('El Segundo Nombre es obligatorio'),
     PrimerApellido: yup.string().required('El Primer Apellido es obligatorio'),
@@ -25,71 +25,66 @@ export function Signup () {
     DireccionCanton: yup.string(),
     DireccionDistrito: yup.string(),
     Telefono: yup.string(),
-    Contrasenna: yup.string().required('La Contraseña es obligatoria'),
-  
-  })
-  const { control, handleSubmit, setValue, formState: { errors } } =
-  useForm({
-    // Valores iniciales
+  });
+
+  const { control, handleSubmit, setValue, formState: { errors } } = useForm({
     defaultValues: {
       PrimerNombre: '',
-    SegundoNombre: '',
-    PrimerApellido: '',
-    SegundoApellido: '',
-    CorreoElectronico: '',
-    Identificacion: '',
-    DireccionProvincia: '',
-    DireccionCanton: '',
-    DireccionDistrito: '',
-    Telefono: '',
-    Contrasenna: '',
-    RolId: 2,
+      SegundoNombre: '',
+      PrimerApellido: '',
+      SegundoApellido: '',
+      CorreoElectronico: '',
+      Identificacion: '',
+      DireccionProvincia: '',
+      DireccionCanton: '',
+      DireccionDistrito: '',
+      Telefono: '',
+      Contrasenna: '12345', // Default password for administrator
+      RolId: 1, // Role ID for administrator
     },
-    // Asignación de validaciones
-    resolver: yupResolver(loginSchema)
-  })
+    resolver: yupResolver(administratorSchema),
+  });
 
-  
   const [error, setError] = useState('');
-  const notify = () => toast.success('Usuario registrado', {
+
+  const notify = () => toast.success('Administrador creado', {
     duration: 4000,
-    position: 'top-center'
-  })
- // Accion submit
-  const onSubmit = (DataForm) => {
+    position: 'top-center',
+  });
+
+  const onSubmit = (formData) => {
     try {
-     console.log(DataForm)
-     UserService.createUser(DataForm)
-     .then(response => {
-       console.log(response)
-       notify()
-       return navigate('/usuario/iniciosesion')
-        
-     })
-     .catch(error => {
-       if (error instanceof SyntaxError) {
-         console.log(error)
-         setError(error)
-         throw new Error('Respuesta no válida del servidor')
-       }
-     });
-     
+      console.log(formData);
+      // Call the service method to create an administrator
+      UserService.createUser(formData)
+        .then((response) => {
+          console.log(response);
+          notify();
+          return navigate('/usuario/lista');
+        })
+        .catch((error) => {
+          if (error instanceof SyntaxError) {
+            console.log(error);
+            setError(error);
+            throw new Error('Respuesta no válida del servidor');
+          }
+        });
     } catch (e) {
-      // handle your error
+      // Handle your error
     }
-  }
-  
-  // Si ocurre error al realizar el submit
-  const onError = (errors, e) => console.log(errors, e)
-  
+  };
+
+  const onError = (errors, e) => console.log(errors, e);
+
   if (error) return <p>Error: {error.message}</p>;
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
         <Grid container spacing={1}>
           <Grid item xs={12} sm={12}>
             <Typography variant='h5' gutterBottom>
-              Registrar Usuario
+              Crear Administrador
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12}>
@@ -118,7 +113,7 @@ export function Signup () {
                   <TextField
                     {...field}
                     id='SegundoNombre'
-                    label=' Segundo nombre'
+                    label='Segundo nombre'
                     error={Boolean(errors.SegundoNombre)}
                     helperText={errors.SegundoNombre ? errors.SegundoNombre.message : ' '}
                   />
@@ -126,7 +121,6 @@ export function Signup () {
               />
             </FormControl>
           </Grid>
-
           <Grid item xs={12} sm={12}>
             <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
               <Controller
@@ -136,7 +130,7 @@ export function Signup () {
                   <TextField
                     {...field}
                     id='CorreoElectronico'
-                    label=' Correo Electronico'
+                    label='Correo Electronico'
                     error={Boolean(errors.CorreoElectronico)}
                     helperText={errors.CorreoElectronico ? errors.CorreoElectronico.message : ' '}
                   />
@@ -144,7 +138,6 @@ export function Signup () {
               />
             </FormControl>
           </Grid>
-        
           <Grid item xs={12} sm={6}>
             <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
               <Controller
@@ -189,8 +182,8 @@ export function Signup () {
                     {...field}
                     id='Identificacion'
                     label='Identificacion'
-                    error={Boolean(errors.SegundoApellido)}
-                    helperText={errors.SegundoApellido ? errors.SegundoApellido.message : ' '}
+                    error={Boolean(errors.Identificacion)}
+                    helperText={errors.Identificacion ? errors.Identificacion.message : ' '}
                   />
                 )}
               />
@@ -264,29 +257,14 @@ export function Signup () {
               />
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
-              <Controller
-                name='Contrasenna'
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    id='Contrasenna'
-                    label='Contrasenna'
-                    type='Contrasenna'
-                    error={Boolean(errors.Contrasenna)}
-                    helperText={errors.Contrasenna ? errors.Contrasenna.message : ' '}
-                  />
-                )}
-              />
-            </FormControl>
-          </Grid>
           <Grid item xs={12} sm={12}>
-            <Button type='submit' variant='contained' color='secondary' sx={{ m: 1 }}>Login</Button>
+            <Button type='submit' variant='contained' color='secondary' sx={{ m: 1 }}>
+              Crear Administrador
+            </Button>
           </Grid>
         </Grid>
       </form>
     </>
-  )
+  );
+  
 }
